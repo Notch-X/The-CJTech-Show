@@ -1,0 +1,42 @@
+﻿@page "/About Us/" 
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient _client 
+@attribute [Authorize] 
+ 
+<style> 
+    h3 { 
+        font-weight: bold; 
+        text-decoration: underline; 
+    } 
+</style> 
+ 
+<div> 
+    <h3 class="card-title">Company Story</h3> 
+    <p> 
+        With the aim of creating Singapore's most extensive and immersive consumer lifestyle marketplaces, 
+        Chris and Jet's management of the CJ Tech Show brings together top brands and innovators for a dynamic and diverse product showcase held quarterly. 
+        Each event is carefully curated, providing consumers with the opportunity to explore the latest trends and products in consumer technology while enjoying exceptional deals. 
+        The series includes flagship events like COMEX and ITSHOW, along with The Tech Show and Consumer Electronics Exhibition (CEE). 
+    </p> 
+</div> 
+ 
+<div style="margin-bottom: 20px;"></div> 
+ 
+<div> 
+    <h3 class="card-title">Company Motto</h3> 
+    <p> 
+        At CJ Event, our mission is to simplify and enhance the event registration process, creating a platform where vendors and organizers can effortlessly connect, collaborate, and bring outstanding events to life. 
+        We strive to be the catalyst for meaningful interactions, innovations, and successful collaborations within the dynamic landscape of tech shows. 
+        Join Us in Shaping the Future! 
+ 
+        Whether you're a tech innovator eager to showcase your latest products or an event organizer seeking a reliable partner, CJ Event invites you to join us in shaping the future of event experiences. 
+        Let's collaborate, innovate, and create memorable events together! 
+    </p> 
+</div> 
+ 
+<div> 
+    <h3 class="card-title">Our Company CEO</h3> 
+    <p> 
+        <img src='/MrKumbar.jpg' alt='MrKumbar' /> 
+    </p> 
+</div>

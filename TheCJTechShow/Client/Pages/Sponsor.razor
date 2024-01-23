@@ -1,0 +1,67 @@
+﻿@page "/Sponsor/"
+@inject HttpClient _client
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<style>
+
+    h3 {
+        font-weight: bold;
+    }
+
+    .sponsors-title {
+        font-family: 'Your-Desired-Font', sans-serif; /* Specify your desired font */
+    }
+
+    .sponsor-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .sponsor-item {
+        flex: 0 0 48%; /* Adjust the width as needed, leaving space for margins */
+        margin-bottom: 20px;
+        border: 1px solid #ddd; /* Add a border to each sponsor item */
+        padding: 10px; /* Add padding for better spacing */
+        box-sizing: border-box; /* Include padding and border in the total width */
+    }
+
+        .sponsor-item img {
+            width: 100%; /* Make the image fill the container */
+            height: auto; /* Maintain aspect ratio */
+        }
+</style>
+
+<h3 class="card-title sponsors-title">Sponsors</h3>
+
+<div class="sponsor-container">
+    <div class="sponsor-item">
+        <h4>DreamCore SG</h4>
+        <p>
+            <img src='/DreamCore SG.jpg' alt='DreamCore SG' />
+        </p>
+    </div>
+
+    <div class="sponsor-item">
+        <h4>Onyx Pc Technology</h4>
+        <p>
+            <img src='/Onyx Pc Technology.jpg' alt='Onyx Pc Technology' />
+        </p>
+    </div>
+
+    <div class="sponsor-item">
+        <h4>TradePac</h4>
+        <p>
+            <img src='/TradePac.jpg' alt='TradePac' />
+        </p>
+    </div>
+
+    <div class="sponsor-item">
+        <h4>SecretLab</h4>
+        <p>
+            <img src='/SecretLab.jpg' alt='SecretLab' />
+        </p>
+    </div>
+</div>

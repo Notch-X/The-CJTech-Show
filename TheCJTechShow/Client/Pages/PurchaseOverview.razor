@@ -1,0 +1,72 @@
+﻿<!-- PurchaseOverview.razor -->
+@page "/PurchaseOverview"
+<PageTitle>Purchase Overview</PageTitle>
+
+<style>
+    h3 {
+        font-family: 'YourUniqueFont', sans-serif;
+        color: #333;
+    }
+
+    p {
+        color: #555;
+        font-size: 16px;
+    }
+
+    .overview-container {
+        margin-top: 20px;
+        background-color: #f4f4f4;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .home-link {
+        margin-top: 20px;
+    }
+
+    a {
+        font-family: 'YourUniqueFont', sans-serif;
+        font-weight: bold;
+        font-size: 18px;
+        color: #4CAF50;
+        text-decoration: none;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    button {
+        background-color: #007bff; /* Set the background color to blue (#007bff) */
+        color: #fff; /* Set the text color to white */
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #0056b3; /* Change the background color on hover */
+        }
+</style>
+
+<h3>Purchase Overview</h3>
+
+<div class="overview-container">
+    <p>Thank you for your purchase! Your order details are as follows:</p>
+
+    <!-- Include purchase details dynamically or add static information -->
+
+    <p>Order ID: ABC123</p>
+    <p>Items Purchased:</p>
+    <ul>
+        <li>Visitor Pass x 2</li>
+        <li>Vendor Pass x 1</li>
+    </ul>
+    <p>Total Amount: $180</p>
+
+    <p>Details will be emailed to you shortly.</p>
+    <button onclick="window.location.href = 'https://localhost:44305/eventinformation';">Back To Event Information</button>
+</div>

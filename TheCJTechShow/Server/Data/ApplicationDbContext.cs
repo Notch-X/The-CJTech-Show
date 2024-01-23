@@ -1,0 +1,25 @@
+﻿using CJTechShow.Shared.Domain;
+using Duende.IdentityServer.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using TheCJTechShow.Server.Configurations.Entities;
+using TheCJTechShow.Server.Models;
+using TheCJTechShow.Shared.Domain;
+
+namespace TheCJTechShow.Server.Data
+{
+    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    {
+        public ApplicationDbContext(
+            DbContextOptions options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+        {
+        }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Organizer> Organizers { get; set; }
+        public DbSet<Vendor> Vendors { get; set; }
+        public DbSet<Visitor> Visitors { get; set; }
+
+    }
+}

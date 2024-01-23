@@ -1,0 +1,85 @@
+﻿@page "/event information/"
+@inject HttpClient _client
+@using Microsoft.AspNetCore.Authorization
+@inject IJSRuntime js
+@attribute [Authorize]
+
+
+<style>
+    h2, h4 {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    h3 {
+        font-weight: bold;
+    }
+</style>
+
+<h3 class="card-title">Event Information</h3>
+
+<br />
+
+<p>
+    Welcome to the IT Tech Show, the ultimate gathering for tech enthusiasts, industry professionals, and innovators!
+    Join us for an immersive experience where cutting-edge technology takes center stage.
+</p>
+
+
+<h4>Event Details</h4>
+<ul>
+    <li>Date: 11, 12, 13 November 2024</li>
+    <li>Time: 3pm</li>
+    <li>Venue: Suntec City Convention Centre, Suntec</li>
+</ul>
+
+
+<h4>Highlights</h4>
+<ul>
+    <li>Explore the Latest Innovations</li>
+    <li>Engage with Industry Experts</li>
+    <li>Networking Opportunities</li>
+    <li>Tech Showcases</li>
+</ul>
+
+<h4>COVID-19 Safety Measures</h4>
+<p>
+    The health and safety of our participants are our top priorities. Rest assured, we are implementing rigorous safety measures to ensure a secure and enjoyable event experience for all.
+</p>
+
+
+<h4>Contact Us</h4>
+<p>
+    For inquiries and additional information, please contact our event organizers:
+</p>
+<ul>
+    <li>Email: CJTechShows@gmail.com</li>
+    <li>Phone: 9696 9912</li>
+</ul>
+
+
+<h4>Follow Us</h4>
+<p>
+    Stay updated on the latest event news and announcements by following us on social media:
+</p>
+<button class="btn btn-primary" onclick="redirectToTwitter()">Twitter</button>
+<button class="btn btn-primary" onclick="redirectToInstagram()">Instagram</button>
+<button class="btn btn-primary" onclick="redirectToTikTok()">TikTok</button>
+<button class="btn btn-primary" onclick="redirectToInstagram()">Instagram</button>
+
+<script>
+    function redirectToTwitter() {
+        window.location.href = 'https://twitter.com/CJTechShow';
+    }
+
+    function redirectToInstagram() {
+        window.location.href = 'https://www.instagram.com/cjtechshow/';
+    }
+</script>
+<br />
+
+<p>
+    Join us at the IT Tech Show and be part of the future of technology!
+</p>
+
+<br />

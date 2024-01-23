@@ -1,0 +1,84 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<style>
+    .pass-info {
+        font-family: 'YourUniqueFont', sans-serif;
+        font-weight: bold;
+    }
+
+    /* Style for the "Buy Tickets" button */
+    .buy-tickets-button {
+        font-family: 'YourUniqueFont', sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        padding: 10px 20px;
+        background-color: #ff0000;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .buy-tickets-button:hover {
+            background-color: #cc0000;
+        }
+
+    .ebrochure-link {
+        font-family: 'YourUniqueFont', sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        color: #3366cc;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    /* Add spacing between CJ TECH SHOW description and Visitor Passes */
+    .description-section {
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    h1 {
+        font-weight: bold;
+    }
+</style>
+
+<h1>CJ TECH SHOW</h1>
+
+<div class="description-section">
+    The TECH Show 2024 is back! With more than 150 brands ranging from tech gadgets, smart-home must-haves & lifestyle products,
+    get ready to unlock unbelievable 11.11 deals offline where you can touch, feel & get expert advice live in person.
+    <a class="ebrochure-link" href="/Desktop/E-Brochure.pdf">Download your E-Brochure Now!</a>
+</div>
+
+<br>
+<h2 class="pass-info">Visitor Passes</h2>
+<p class="pass-info">
+    Visitor passes cost $100 and include:
+</p>
+<ul class="pass-info">
+    <li>Access to all booths and talks</li>
+    <li>Access to dinner buffet</li>
+    <li>FREE Tech Bag</li>
+    <li>VIP Seating for exclusive workshops</li>
+</ul>
+
+<h2 class="pass-info">Vendor Passes</h2>
+<p class="pass-info">
+    Vendor passes cost $80 and include:
+</p>
+<ul class="pass-info">
+    <li>Access to all booths and talks</li>
+    <li>Access to dinner buffet</li>
+    <li>Exclusive workshops</li>
+    <li>FREE Tech Bag</li>
+</ul>
+
+<button class="buy-tickets-button" onclick="window.location.href = 'https://localhost:44305/BuyVendorTicket';">Buy Vendor Passes</button>
+<button class="buy-tickets-button" onclick="window.location.href = 'https://localhost:44305/BuyTicket';">Buy Visitor Passes</button>
