@@ -1,16 +1,28 @@
-﻿using System;
+﻿using TheCJTechShow.Shared.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace CJTechShow.Shared.Domain
+
+namespace TheCJTechShow.Shared.Domain
 {
     public class Event : BaseDomainModel
     {
-        public string? Name { get; set; }
-        public string? Duration { get; set; }
-        public double? TicketPrice { get; set; }
-        public string? Location { get; set; }
-        public string? ContactNo { get; set; }
+            public int EventID { get; set; }
+            public string? EventName { get; set; }
+            public string? EventDuration { get; set; }
+            public string? EventLocation { get; set; }
+            public string? EventDescription { get; set; }
+            public string? EventTicketPrice { get; set; }
+            public string? EventContactInformation { get; set; }
+            public string? EventRegistration { get; set; }
+            public virtual Organizer? OrganizerID { get; set; }
+            public virtual Vendor? VendorID { get; set; }
+
+            public static implicit operator Event (int v)
+            {
+            throw new NotImplementedException();
+        }
+        }
     }
-}
