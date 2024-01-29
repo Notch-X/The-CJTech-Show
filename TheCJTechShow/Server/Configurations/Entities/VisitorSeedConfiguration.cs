@@ -16,12 +16,11 @@ namespace TheCJTechShow.Server.Configurations.Entities
 
         public void Configure(EntityTypeBuilder<Visitor> builder)
         {
-            builder.HasKey(x => x.VisitorID);
             builder.HasData(
 
 new Visitor
 {
-    VisitorID = 1,
+    ID = 1,
     VisitorName = "Mr Kumbar",
     VisitorContactNumber = "98234123",
     VisitorEmail = "MrKumbar123@gmail.com",
@@ -29,7 +28,7 @@ new Visitor
 },
 new Visitor
 {
-    VisitorID = 2,
+    ID = 2,
     VisitorName = "Mr Foo Ling Chen",
     VisitorContactNumber = "88843212",
     VisitorEmail = "FooLingChen123@gmail.com",

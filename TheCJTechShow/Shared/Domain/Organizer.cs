@@ -9,17 +9,14 @@ namespace TheCJTechShow.Shared.Domain
 {
     public class Organizer : BaseDomainModel
     {
-        public int OrganizerID { get; set; }
         public string? OrganizerName { get; set; }
         public string? OrganizerContactNumber { get; set; }
         public string? OrganizerPosition { get; set; }
         public string? OrganizerEmail { get; set; }
         public string? OrganizerPassword { get; set; }
-        public virtual Vendor? VendorID { get; set; }
 
-        public static implicit operator Organizer(int v)
-       {
-            throw new NotImplementedException();
-        }
+        public int VendorID { get; set; }
+        public virtual Vendor? Vendor { get; set; }
+
     }
 }

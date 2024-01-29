@@ -20,19 +20,18 @@ namespace TheCJTechShow.Server.Configurations.Entities
 
 new Event
 {
-    EventID = 1,
+    ID = 1,
     EventName = "IT Tech Show Suntec City",
-    EventDuration = "96961234",
+    EventDuration = "10am-8pm",
     EventLocation = "Suntec City, Postal code:039053",
     EventDescription = "IT Tech Show",
     EventTicketPrice = "Visitor:$100 ,Vendor:$80",
     EventContactInformation = "69691234",
     OrganizerID = 1,
-    VendorID = 1
 },
 new Event
 {
-    EventID = 2,
+    ID = 2,
     EventName = "IT Tech Show Expo",
     EventDuration = "10am-8pm",
     EventLocation = "Expo, Postal code:392012",
@@ -40,7 +39,6 @@ new Event
     EventTicketPrice = "Visitor:$100 ,Vendor:$80",
     EventContactInformation = "69691234",
     OrganizerID = 2,
-    VendorID = 2
 }
     );
         }

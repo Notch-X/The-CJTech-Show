@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace TheCJTechShow.Shared.Domain
 {
-    public class Sponsor : BaseDomainModel
+    public class Sponsor :BaseDomainModel
     {
         public string? SponsorName { get; set; }
         public string? SponsorContactInfo { get; set; }
-        public virtual Event? EventID { get; set; }
-        public virtual Organizer? OrganizerID { get; set; }
+
+        public int EventID { get; set; }
+        public virtual Event? Event { get; set; }
+
 
     }
 }

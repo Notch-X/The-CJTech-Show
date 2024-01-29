@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace TheCJTechShow.Shared.Domain
 {
-    public class Event : BaseDomainModel
+    public class Event :BaseDomainModel
     {
-            public int EventID { get; set; }
             public string? EventName { get; set; }
             public string? EventDuration { get; set; }
             public string? EventLocation { get; set; }
@@ -17,12 +16,8 @@ namespace TheCJTechShow.Shared.Domain
             public string? EventTicketPrice { get; set; }
             public string? EventContactInformation { get; set; }
             public string? EventRegistration { get; set; }
-            public virtual Organizer? OrganizerID { get; set; }
-            public virtual Vendor? VendorID { get; set; }
 
-            public static implicit operator Event (int v)
-            {
-            throw new NotImplementedException();
-        }
-        }
+        public int OrganizerID { get; set; }
+        public virtual Organizer? Organizers { get; set; }
+    }
     }

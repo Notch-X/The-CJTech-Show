@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using TheCJTechShow.Server.Configurations.Entities;
 using TheCJTechShow.Server.Models;
-using TheCJTechShow.Shared.Domain;
 
 namespace TheCJTechShow.Server.Data
 {

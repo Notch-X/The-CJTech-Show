@@ -8,7 +8,7 @@ using TheCJTechShow.Server.Data;
 
 #nullable disable
 
-namespace TheCJTechShow.Server.Data.Migrations
+namespace TheCJTechShow.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -373,11 +373,11 @@ namespace TheCJTechShow.Server.Data.Migrations
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -397,9 +397,6 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("EventDuration")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EventID")
-                        .HasColumnType("int");
-
                     b.Property<string>("EventLocation")
                         .HasColumnType("nvarchar(max)");
 
@@ -412,31 +409,54 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("EventTicketPrice")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrganizerIDId")
+                    b.Property<int>("OrganizerID")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VendorIDId")
-                        .HasColumnType("int");
+                    b.HasKey("ID");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizerIDId");
-
-                    b.HasIndex("VendorIDId");
+                    b.HasIndex("OrganizerID");
 
                     b.ToTable("Events");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventContactInformation = "69691234",
+                            EventDescription = "IT Tech Show",
+                            EventDuration = "10am-8pm",
+                            EventLocation = "Suntec City, Postal code:039053",
+                            EventName = "IT Tech Show Suntec City",
+                            EventTicketPrice = "Visitor:$100 ,Vendor:$80",
+                            OrganizerID = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventContactInformation = "69691234",
+                            EventDescription = "IT Tech Show",
+                            EventDuration = "10am-8pm",
+                            EventLocation = "Expo, Postal code:392012",
+                            EventName = "IT Tech Show Expo",
+                            EventTicketPrice = "Visitor:$100 ,Vendor:$80",
+                            OrganizerID = 2
+                        });
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Organizer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -453,9 +473,6 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("OrganizerEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrganizerID")
-                        .HasColumnType("int");
-
                     b.Property<string>("OrganizerName")
                         .HasColumnType("nvarchar(max)");
 
@@ -468,23 +485,49 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VendorIDId")
+                    b.Property<int>("VendorID")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("VendorIDId");
+                    b.HasIndex("VendorID");
 
                     b.ToTable("Organizers");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OrganizerContactNumber = "99661234",
+                            OrganizerEmail = "ChristopherRay321@gmail.com",
+                            OrganizerName = "Christopher Ray",
+                            OrganizerPassword = "ChristopherRay123@",
+                            OrganizerPosition = "Overall Manager",
+                            VendorID = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OrganizerContactNumber = "98343264",
+                            OrganizerEmail = "Chuareijet2003@gmail.com",
+                            OrganizerName = "Chua Rei Jet",
+                            OrganizerPassword = "Chuareijet2003",
+                            OrganizerPosition = "Overall Supervisor",
+                            VendorID = 2
+                        });
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Sponsor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -495,10 +538,7 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EventIDId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrganizerIDId")
+                    b.Property<int>("EventID")
                         .HasColumnType("int");
 
                     b.Property<string>("SponsorContactInfo")
@@ -510,22 +550,40 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
-                    b.HasIndex("EventIDId");
-
-                    b.HasIndex("OrganizerIDId");
+                    b.HasIndex("EventID");
 
                     b.ToTable("Sponsors");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventID = 1,
+                            SponsorContactInfo = "93939231",
+                            SponsorName = "Sukh Ma"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventID = 2,
+                            SponsorContactInfo = "94942314",
+                            SponsorName = "Bendover"
+                        });
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Vendor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("BoothNumber")
                         .HasColumnType("int");
@@ -554,24 +612,54 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("VendorDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VendorID")
-                        .HasColumnType("int");
-
                     b.Property<string>("VendorName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("VisitorID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("VisitorID");
 
                     b.ToTable("Vendors");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            BoothNumber = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Products = "Graphics Cards, Headsets,Microphones,keyboards",
+                            SocialMedia = "BNM_Tech",
+                            VendorContactDetails = "96961234",
+                            VendorDescription = "BNM Technology Pte Ltd, Leading IT product sales",
+                            VendorName = "Derrick Choo",
+                            VisitorID = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            BoothNumber = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Products = "CHATGPT",
+                            SocialMedia = "CHATGPT_AIKING",
+                            VendorContactDetails = "94532356",
+                            VendorDescription = "AIChatGPT Technology Pte Ltd, Leading CHATGPT seller",
+                            VendorName = "Darius Yeo",
+                            VisitorID = 2
+                        });
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Visitor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -594,15 +682,34 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("VisitorEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VisitorID")
-                        .HasColumnType("int");
-
                     b.Property<string>("VisitorName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Visitors");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VisitorCompany = "Temasek Polytechnic",
+                            VisitorContactNumber = "98234123",
+                            VisitorEmail = "MrKumbar123@gmail.com",
+                            VisitorName = "Mr Kumbar"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            VisitorCompany = "Tech Dynamic Pte Ltd",
+                            VisitorContactNumber = "88843212",
+                            VisitorEmail = "FooLingChen123@gmail.com",
+                            VisitorName = "Mr Foo Ling Chen"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -658,41 +765,46 @@ namespace TheCJTechShow.Server.Data.Migrations
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Event", b =>
                 {
-                    b.HasOne("TheCJTechShow.Shared.Domain.Organizer", "OrganizerID")
+                    b.HasOne("TheCJTechShow.Shared.Domain.Organizer", "Organizers")
                         .WithMany()
-                        .HasForeignKey("OrganizerIDId");
+                        .HasForeignKey("OrganizerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("TheCJTechShow.Shared.Domain.Vendor", "VendorID")
-                        .WithMany()
-                        .HasForeignKey("VendorIDId");
-
-                    b.Navigation("OrganizerID");
-
-                    b.Navigation("VendorID");
+                    b.Navigation("Organizers");
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Organizer", b =>
                 {
-                    b.HasOne("TheCJTechShow.Shared.Domain.Vendor", "VendorID")
+                    b.HasOne("TheCJTechShow.Shared.Domain.Vendor", "Vendor")
                         .WithMany()
-                        .HasForeignKey("VendorIDId");
+                        .HasForeignKey("VendorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("VendorID");
+                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Sponsor", b =>
                 {
-                    b.HasOne("TheCJTechShow.Shared.Domain.Event", "EventID")
+                    b.HasOne("TheCJTechShow.Shared.Domain.Event", "Event")
                         .WithMany()
-                        .HasForeignKey("EventIDId");
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("TheCJTechShow.Shared.Domain.Organizer", "OrganizerID")
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("TheCJTechShow.Shared.Domain.Vendor", b =>
+                {
+                    b.HasOne("TheCJTechShow.Shared.Domain.Visitor", "Visitor")
                         .WithMany()
-                        .HasForeignKey("OrganizerIDId");
+                        .HasForeignKey("VisitorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("EventID");
-
-                    b.Navigation("OrganizerID");
+                    b.Navigation("Visitor");
                 });
 #pragma warning restore 612, 618
         }

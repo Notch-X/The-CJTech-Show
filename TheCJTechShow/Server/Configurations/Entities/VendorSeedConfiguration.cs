@@ -20,23 +20,25 @@ namespace TheCJTechShow.Server.Configurations.Entities
 
 new Vendor
 {
-    VendorID = 1,
+    ID = 1,
     VendorName = "Derrick Choo",
     VendorContactDetails = "96961234",
     BoothNumber = 1,
     VendorDescription = "BNM Technology Pte Ltd, Leading IT product sales",
     Products = "Graphics Cards, Headsets,Microphones,keyboards",
-    SocialMedia = "BNM_Tech"
+    SocialMedia = "BNM_Tech",
+    VisitorID =1
 },
 new Vendor
 {
-    VendorID = 2,
+    ID = 2,
     VendorName = "Darius Yeo",
     VendorContactDetails = "94532356",
     BoothNumber = 2,
     VendorDescription = "AIChatGPT Technology Pte Ltd, Leading CHATGPT seller",
     Products = "CHATGPT",
-    SocialMedia = "CHATGPT_AIKING"
+    SocialMedia = "CHATGPT_AIKING",
+    VisitorID = 2
 }
 );
         }
