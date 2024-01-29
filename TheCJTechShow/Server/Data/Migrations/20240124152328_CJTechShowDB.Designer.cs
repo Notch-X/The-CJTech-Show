@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheCJTechShow.Server.Data;
 
@@ -11,9 +12,11 @@ using TheCJTechShow.Server.Data;
 namespace TheCJTechShow.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240124152328_CJTechShowDB")]
+    partial class CJTechShowDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -319,12 +322,6 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -476,47 +473,6 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.HasIndex("VendorIDId");
 
                     b.ToTable("Organizers");
-                });
-
-            modelBuilder.Entity("TheCJTechShow.Shared.Domain.Sponsor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("EventIDId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrganizerIDId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SponsorContactInfo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SponsorName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventIDId");
-
-                    b.HasIndex("OrganizerIDId");
-
-                    b.ToTable("Sponsors");
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Vendor", b =>
@@ -678,21 +634,6 @@ namespace TheCJTechShow.Server.Data.Migrations
                         .HasForeignKey("VendorIDId");
 
                     b.Navigation("VendorID");
-                });
-
-            modelBuilder.Entity("TheCJTechShow.Shared.Domain.Sponsor", b =>
-                {
-                    b.HasOne("TheCJTechShow.Shared.Domain.Event", "EventID")
-                        .WithMany()
-                        .HasForeignKey("EventIDId");
-
-                    b.HasOne("TheCJTechShow.Shared.Domain.Organizer", "OrganizerID")
-                        .WithMany()
-                        .HasForeignKey("OrganizerIDId");
-
-                    b.Navigation("EventID");
-
-                    b.Navigation("OrganizerID");
                 });
 #pragma warning restore 612, 618
         }

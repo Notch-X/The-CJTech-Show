@@ -1,0 +1,31 @@
+﻿@page "/events/create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+
+<h3 class="card-title">Create New event</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create event" event="event" OnValidSubmit="@Createevent" />
+
+@code {
+    Event event = new event();
+
+    private IList<Organizer>? Organizers;
+    private IList<Vendor>? Vendors;
+   
+
+    protected async override Task OnInitializedAsync()
+    {
+        Organizer = await _client.GetFromJsonAsync<List<Organizer>>($"{Endpoints.OrganizersEndpoint}");
+        Vendor = await _client.GetFromJsonAsync<List<Vendor>>($"{Endpoints.VendorsEndpoint}");
+       
+    }
+
+    private async Task Createevent()
+    {
+        await _client.PostAsJsonAsync(Endpoints.EventsEndpoint, event);
+        _navManager.NavigateTo("/events/");
+    }
+}

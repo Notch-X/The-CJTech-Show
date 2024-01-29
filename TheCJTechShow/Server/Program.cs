@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using TheCJTechShow.Server.Data;
 using TheCJTechShow.Server.Models;
+using TheCJTechShow.Server.IRepository;
+using TheCJTechShow.Server.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,8 @@ builder.Services.AddIdentityServer()
 
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
+
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

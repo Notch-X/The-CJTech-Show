@@ -1,4 +1,4 @@
-﻿using CJTechShow.Shared.Domain;
+﻿using TheCJTechShow.Shared.Domain;
 using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +20,20 @@ namespace TheCJTechShow.Server.Data
         public DbSet<Organizer> Organizers { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Visitor> Visitors { get; set; }
+        public DbSet<Sponsor> Sponsors { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new VisitorSeedConfiguration());
+            builder.ApplyConfiguration(new OrganizerSeedConfiguration());
+            builder.ApplyConfiguration(new VendorSeedConfiguration());
+            builder.ApplyConfiguration(new SponsorSeedConfiguration());
+            builder.ApplyConfiguration(new EventSeedConfiguration());
+
+
+
+        }
     }
 }

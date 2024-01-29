@@ -1,4 +1,4 @@
-﻿using CJTechShow.Shared.Domain;
+﻿using TheCJTechShow.Shared.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +7,20 @@ using System.Threading.Tasks;
 
 namespace TheCJTechShow.Shared.Domain
 {
-    public class Vendor: BaseDomainModel
+
+    public class Vendor : BaseDomainModel
     {
-        public string? Name { get; set; }
-        public string? ContactNo { get; set; }
-        public string? EmailAddress { get; set; }
-        public string? BoothNo { get; set; }
-        public int EventID { get; set; }
-        public virtual Event? Event { get; set; }
+        public int VendorID { get; set; }
+        public string? VendorName { get; set; }
+        public string? VendorContactDetails { get; set; }
+        public int BoothNumber { get; set; }
+        public string? VendorDescription { get; set; }
+        public string? Products { get; set; }
+        public string? SocialMedia { get; set; }
+
+        public static implicit operator Vendor(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

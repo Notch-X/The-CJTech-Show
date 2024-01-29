@@ -1,0 +1,81 @@
+﻿@page "/events/"
+@inject HttpClient _client
+@inject IJSRuntime _js
+@attribute [Authorize]
+@implements IDisposable
+
+<h3 class="card-title">Events</h3>
+<a href="/events/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Events
+</a>
+<br />
+
+@if (Events == null)
+{
+    <div class="alert alert-info">Loading Events...</div>
+}
+else
+{
+    <table class="table table-responsive" id="eventsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var event in Events)
+            {
+                <tr>
+                    <td>@event.Name</td>
+                    <td>
+                        <a href="/events/view/@event.EventID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/events/edit/@event.EventID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(event.EventID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<Event>? Events;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Events = await _client.GetFromJsonAsync<List<Event>>($"{Endpoints.EventsEndpoint}");
+    }
+
+    async Task Delete(int eventId)
+    {
+        if (Events != null)
+        {
+            var eventItem = Events.First(q => q.EventID == eventId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {eventItem.Name}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.EventsEndpoint}/{eventId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#eventsTable");
+    }
+
+    public void Dispose()
+    {
+       _js.InvokeVoidAsync("DataTablesDispose", "#eventsTable");
+    }
+}

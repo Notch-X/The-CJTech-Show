@@ -1,10 +1,8 @@
-﻿<!-- BuyVendorTicket.razor -->
-@page "/BuyVendorTicket"
+﻿@page "/BuyVendorTicket"
 <PageTitle>Buy Vendor Tickets</PageTitle>
 
 <style>
-    /* Your existing styles remain unchanged */
-
+   
     h3 {
         font-family: 'YourUniqueFont', sans-serif;
         color: #333;
@@ -72,7 +70,6 @@
 
 <p>Welcome to the Buy Vendor Ticket page! Here, you can purchase vendor passes for the CJ TECH SHOW.</p>
 
-<!-- Ticket details -->
 <div class="ticket-details">
     <h2 class="pass-info">Vendor Passes</h2>
     <p class="pass-info">
@@ -86,10 +83,10 @@
     </ul>
 </div>
 
-<!-- User input form -->
+
 <div class="form-container">
     <h4>Enter Your Details</h4>
-    <form>
+    <form id="vendorForm" action="/api/vendors" method="POST">
         <label for="name">Vendor/Company Name:</label>
         <input type="text" id="name" name="name" placeholder="Enter your Vendor/Company Name" required>
 
@@ -114,6 +111,17 @@
             </div>
         </div>
 
-        <button onclick="window.location.href = 'https://localhost:44305/PurchaseOverview';">Purchased Now!</button>
+        <button type="submit">Purchase Now!</button>
     </form>
 </div>
+<script>
+    function validateForm() {
+        var form = document.getElementById("vendorForm");
+        if (!form.checkValidity()) {
+            // If the form is invalid, trigger browser's built-in validation
+            form.reportValidity();
+            return false;
+        }
+        return true;
+    }
+</script>

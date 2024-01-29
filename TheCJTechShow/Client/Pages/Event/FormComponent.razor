@@ -1,0 +1,65 @@
+﻿
+<h3>Events</h3>
+
+<EditForm Model="@event" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>EventName: </label>
+            <div>
+                <InputText @bind-Value="@event.EventName" class="form-control" />
+                <ValidationMessage For="@(() => event.EventName )" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>EventLocation: </label>
+            <div>
+                <InputText @bind-Value="@event.EventLocation" class="form-control" />
+                <ValidationMessage For="@(() => event.EventLocation )" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>EventDuration: </label>
+            <div>
+                <InputText @bind-Value="@event.EventDuration" class="form-control" />
+                <ValidationMessage For="@(() => event.EventDuration )" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>EventDescription: </label>
+            <div>
+                <InputText @bind-Value="@event.EventDescription" class="form-control" />
+                <ValidationMessage For="@(() => event.EventDescription )" />
+            </div>
+        </div>
+         </div>
+        <div class="form-group">
+            <label>EventContactInformation: </label>
+            <div>
+                <InputText @bind-Value="@event.EventContactInformation" class="form-control" />
+                <ValidationMessage For="@(() => event.EventContactInformation )" />
+            </div>
+        </div>
+    </fieldset>
+
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <BackToList Target="Events" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public event? event { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+}
