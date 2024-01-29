@@ -1,5 +1,61 @@
-﻿<h3>Index</h3>
+﻿
+@using TheCJTechShow.Client.Static;
+@using TheCJTechShow.Shared.Domain;
+
+@inject HttpClient _client
+@inject IJSRuntime _js
+@attribute [Authorize]
+@implements IDisposable
+
+<h3>Events</h3>
+
+<EditForm Model="@eventModel" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>EventName: </label>
+            <div>
+                <InputText @bind-Value="@eventModel.EventName" class="form-control" />
+                <ValidationMessage For="@(() => eventModel.EventName)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>EventLocation: </label>
+            <div>
+                <InputText @bind-Value="@eventModel.EventLocation" class="form-control" />
+                <ValidationMessage For="@(() => eventModel.EventLocation)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>EventDuration: </label>
+            <div>
+                <InputText @bind-Value="@eventModel.EventDuration" class="form-control" />
+                <ValidationMessage For="@(() => eventModel.EventDuration)" />
+            </div>
+        </div>
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <BackToList Target="Events" />
+</EditForm>
 
 @code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Event? eventModel { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback<EditContext> OnValidSubmit { get; set; }
 
+    public void Dispose()
+    {
+        // Implement IDisposable.Dispose if necessary
+    }
 }

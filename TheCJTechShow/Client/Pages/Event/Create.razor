@@ -1,33 +1,30 @@
 ﻿@page "/events/create"
-@using TheCJTechShow.Client.Static;
-@using TheCJTechShow.Shared.Domain;
+@using TheCJTechShow.Client.Static
+@using TheCJTechShow.Shared.Domain
 @inject HttpClient _client
 @inject NavigationManager _navManager
-
 
 <h3 class="card-title">Create New event</h3>
 <hr />
 <br />
 
-<FormComponent ButtonText="Create event" event="event" OnValidSubmit="@Createevent" />
+<FormComponent ButtonText="Create event" event="newEvent" OnValidSubmit="@CreateEvent" />
 
 @code {
-    Event event = new Event();
+    Event newEvent = new Event();
 
     private IList<Organizer>? Organizers;
     private IList<Vendor>? Vendors;
-   
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         Organizers = await _client.GetFromJsonAsync<List<Organizer>>($"{Endpoints.OrganizersEndpoint}");
         Vendors = await _client.GetFromJsonAsync<List<Vendor>>($"{Endpoints.VendorsEndpoint}");
-       
     }
 
-    private async Task Createevent()
+    private async Task CreateEvent()
     {
-        await _client.PostAsJsonAsync(Endpoints.EventsEndpoint, event);
+        await _client.PostAsJsonAsync(Endpoints.EventsEndpoint, newEvent);
         _navManager.NavigateTo("/events/");
     }
 }

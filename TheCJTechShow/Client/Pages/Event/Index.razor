@@ -1,5 +1,86 @@
-﻿<h3>Index</h3>
+﻿@page "/events/"
+@inject HttpClient _client
+@inject IJSRuntime _js
+@attribute [Authorize]
+@implements IDisposable
+@using TheCJTechShow.Client.Static;
+@using TheCJTechShow.Shared.Domain;
+
+<h3 class="card-title">Events</h3>
+<a href="/events/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Events
+</a>
+<br />
+
+@if (Events == null)
+{
+    <div class="alert alert-info">Loading Events...</div>
+}
+else
+{
+    <table class="table table-responsive" id="eventsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var eventItem in Events)
+            {
+                <tr>
+                    <td>@eventItem.EventName</td>
+                    <td>
+                        <a href="/events/view/@eventItem.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/events/edit/@eventItem.ID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(eventItem.ID, eventItem.EventName))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
+    private List<Event> Events;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshEvents();
+    }
+
+    private async Task RefreshEvents()
+    {
+        Events = await _client.GetFromJsonAsync<List<Event>>(Endpoints.EventsEndpoint);
+    }
+
+    async Task Delete(int eventId, string eventName)
+    {
+        var confirm = await _js.InvokeAsync<bool>("confirm", $"Do you want to delete {eventName}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.EventsEndpoint}/{eventId}");
+            await RefreshEvents();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await _js.InvokeVoidAsync("AddDataTable", "#eventsTable");
+        }
+    }
+
+    public void Dispose()
+    {
+        _js.InvokeVoidAsync("DataTablesDispose", "#eventsTable");
+    }
 }

@@ -1,5 +1,35 @@
-﻿<h3>Index</h3>
+﻿@page "/events/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@using TheCJTechShow.Shared.Domain
+@using TheCJTechShow.Client.Static;
+<h3>View</h3>
+
+@if (newEvent != null)
+{
+<FormComponent event="event" Disabled="true" />
+        }
+else
+{
+<p>Loading...</p>
+        }
 
 @code {
+    [Parameter] public int id { get; set; }
+    Event? newEvent = new Event();
 
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadEventData();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadEventData();
+    }
+
+    private async Task LoadEventData()
+    {
+    newEvent = await _client.GetFromJsonAsync<Event>($"{Endpoints.EventsEndpoint}/{id}");
+    }
 }
