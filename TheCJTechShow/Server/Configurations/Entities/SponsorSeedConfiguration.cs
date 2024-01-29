@@ -20,6 +20,7 @@ namespace TheCJTechShow.Server.Configurations.Entities
 
 new Sponsor
 {
+    Id = 1,
     SponsorName = "Sukh Ma",
     SponsorContactInfo = "93939231",
     EventID = 1,
@@ -27,6 +28,7 @@ new Sponsor
 },
 new Sponsor
 {
+    Id = 2,
     SponsorName = "Bendover",
     SponsorContactInfo = "94942314",
     EventID = 2,

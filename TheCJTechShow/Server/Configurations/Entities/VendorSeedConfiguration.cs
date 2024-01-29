@@ -20,7 +20,7 @@ namespace TheCJTechShow.Server.Configurations.Entities
 
 new Vendor
 {
-    VendorID = 1,
+    Id = 1,
     VendorName = "Derrick Choo",
     VendorContactDetails = "96961234",
     BoothNumber = 1,
@@ -30,7 +30,7 @@ new Vendor
 },
 new Vendor
 {
-    VendorID = 2,
+    Id = 2,
     VendorName = "Darius Yeo",
     VendorContactDetails = "94532356",
     BoothNumber = 2,

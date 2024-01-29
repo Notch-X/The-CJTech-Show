@@ -26,11 +26,8 @@ namespace TheCJTechShow.Server.Data
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new VisitorSeedConfiguration());
-            builder.ApplyConfiguration(new OrganizerSeedConfiguration());
-            builder.ApplyConfiguration(new VendorSeedConfiguration());
-            builder.ApplyConfiguration(new SponsorSeedConfiguration());
-            builder.ApplyConfiguration(new EventSeedConfiguration());
+
+
 
 
 

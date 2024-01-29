@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TheCJTechShow.Server.Data;
 
 #nullable disable
 
-namespace TheCJTechShow.Server.Data.Migrations
+namespace TheCJTechShow.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240129043801_newedb")]
+    partial class newedb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -397,9 +400,6 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("EventDuration")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EventID")
-                        .HasColumnType("int");
-
                     b.Property<string>("EventLocation")
                         .HasColumnType("nvarchar(max)");
 
@@ -412,20 +412,10 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("EventTicketPrice")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrganizerIDId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VendorIDId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OrganizerIDId");
-
-                    b.HasIndex("VendorIDId");
 
                     b.ToTable("Events");
                 });
@@ -453,9 +443,6 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("OrganizerEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrganizerID")
-                        .HasColumnType("int");
-
                     b.Property<string>("OrganizerName")
                         .HasColumnType("nvarchar(max)");
 
@@ -468,12 +455,12 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VendorIDId")
+                    b.Property<int>("VendorID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VendorIDId");
+                    b.HasIndex("VendorID");
 
                     b.ToTable("Organizers");
                 });
@@ -495,10 +482,10 @@ namespace TheCJTechShow.Server.Data.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EventIDId")
+                    b.Property<int>("EventID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrganizerIDId")
+                    b.Property<int>("OrganizerID")
                         .HasColumnType("int");
 
                     b.Property<string>("SponsorContactInfo")
@@ -512,9 +499,9 @@ namespace TheCJTechShow.Server.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventIDId");
+                    b.HasIndex("EventID");
 
-                    b.HasIndex("OrganizerIDId");
+                    b.HasIndex("OrganizerID");
 
                     b.ToTable("Sponsors");
                 });
@@ -553,9 +540,6 @@ namespace TheCJTechShow.Server.Data.Migrations
 
                     b.Property<string>("VendorDescription")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VendorID")
-                        .HasColumnType("int");
 
                     b.Property<string>("VendorName")
                         .HasColumnType("nvarchar(max)");
@@ -656,43 +640,34 @@ namespace TheCJTechShow.Server.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TheCJTechShow.Shared.Domain.Event", b =>
-                {
-                    b.HasOne("TheCJTechShow.Shared.Domain.Organizer", "OrganizerID")
-                        .WithMany()
-                        .HasForeignKey("OrganizerIDId");
-
-                    b.HasOne("TheCJTechShow.Shared.Domain.Vendor", "VendorID")
-                        .WithMany()
-                        .HasForeignKey("VendorIDId");
-
-                    b.Navigation("OrganizerID");
-
-                    b.Navigation("VendorID");
-                });
-
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Organizer", b =>
                 {
-                    b.HasOne("TheCJTechShow.Shared.Domain.Vendor", "VendorID")
+                    b.HasOne("TheCJTechShow.Shared.Domain.Vendor", "Vendor")
                         .WithMany()
-                        .HasForeignKey("VendorIDId");
+                        .HasForeignKey("VendorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("VendorID");
+                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Sponsor", b =>
                 {
-                    b.HasOne("TheCJTechShow.Shared.Domain.Event", "EventID")
+                    b.HasOne("TheCJTechShow.Shared.Domain.Event", "Event")
                         .WithMany()
-                        .HasForeignKey("EventIDId");
+                        .HasForeignKey("EventID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("TheCJTechShow.Shared.Domain.Organizer", "OrganizerID")
+                    b.HasOne("TheCJTechShow.Shared.Domain.Organizer", "Organizer")
                         .WithMany()
-                        .HasForeignKey("OrganizerIDId");
+                        .HasForeignKey("OrganizerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("EventID");
+                    b.Navigation("Event");
 
-                    b.Navigation("OrganizerID");
+                    b.Navigation("Organizer");
                 });
 #pragma warning restore 612, 618
         }

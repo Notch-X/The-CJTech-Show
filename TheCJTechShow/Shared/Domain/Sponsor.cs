@@ -11,8 +11,10 @@ namespace TheCJTechShow.Shared.Domain
     {
         public string? SponsorName { get; set; }
         public string? SponsorContactInfo { get; set; }
-        public virtual Event? EventID { get; set; }
-        public virtual Organizer? OrganizerID { get; set; }
+        public int EventID { get; set; }
+        public virtual Event? Event { get; set; }
+        public int OrganizerID { get; set; }
+        public virtual Organizer? Organizer { get; set; }
 
     }
 }

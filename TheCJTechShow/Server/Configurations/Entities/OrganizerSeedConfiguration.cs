@@ -20,7 +20,7 @@ namespace TheCJTechShow.Server.Configurations.Entities
 
 new Organizer
 {
-    OrganizerID = 1,
+    Id = 1,
     OrganizerName = "Christopher Ray",
     OrganizerContactNumber = "99661234",
     OrganizerPosition = "Overall Manager",
@@ -30,7 +30,7 @@ new Organizer
 },
 new Organizer
 {
-    OrganizerID = 2,
+    Id = 2,
     OrganizerName = "Chua Rei Jet",
     OrganizerContactNumber = "98343264",
     OrganizerPosition = "Overall Supervisor",
