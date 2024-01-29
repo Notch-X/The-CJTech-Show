@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace TheCJTechShow.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class newedb : Migration
+    public partial class newedbasdasdasdasdasdas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,29 +71,6 @@ namespace TheCJTechShow.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeviceCodes", x => x.UserCode);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Events",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EventName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EventDuration = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EventLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EventDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EventTicketPrice = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EventContactInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EventRegistration = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,13 +137,13 @@ namespace TheCJTechShow.Server.Migrations
                 name: "Visitors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    VisitorID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VisitorID = table.Column<int>(type: "int", nullable: false),
                     VisitorName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VisitorContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VisitorEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VisitorCompany = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -172,7 +151,7 @@ namespace TheCJTechShow.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Visitors", x => x.Id);
+                    table.PrimaryKey("PK_Visitors", x => x.VisitorID);
                 });
 
             migrationBuilder.CreateTable(
@@ -310,6 +289,41 @@ namespace TheCJTechShow.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Events",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EventName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventDuration = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventTicketPrice = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventContactInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventRegistration = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrganizerID = table.Column<int>(type: "int", nullable: true),
+                    VendorID = table.Column<int>(type: "int", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Events", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Events_Organizers_OrganizerID",
+                        column: x => x.OrganizerID,
+                        principalTable: "Organizers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Events_Vendors_VendorID",
+                        column: x => x.VendorID,
+                        principalTable: "Vendors",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sponsors",
                 columns: table => new
                 {
@@ -339,6 +353,42 @@ namespace TheCJTechShow.Server.Migrations
                         principalTable: "Organizers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Vendors",
+                columns: new[] { "Id", "BoothNumber", "CreatedBy", "DateCreated", "DateUpdated", "Products", "SocialMedia", "UpdatedBy", "VendorContactDetails", "VendorDescription", "VendorName" },
+                values: new object[,]
+                {
+                    { 1, 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Graphics Cards, Headsets,Microphones,keyboards", "BNM_Tech", null, "96961234", "BNM Technology Pte Ltd, Leading IT product sales", "Derrick Choo" },
+                    { 2, 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "CHATGPT", "CHATGPT_AIKING", null, "94532356", "AIChatGPT Technology Pte Ltd, Leading CHATGPT seller", "Darius Yeo" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Visitors",
+                columns: new[] { "VisitorID", "CreatedBy", "DateCreated", "DateUpdated", "Id", "UpdatedBy", "VisitorCompany", "VisitorContactNumber", "VisitorEmail", "VisitorName" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, "Temasek Polytechnic", "98234123", "MrKumbar123@gmail.com", "Mr Kumbar" },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, "Tech Dynamic Pte Ltd", "88843212", "FooLingChen123@gmail.com", "Mr Foo Ling Chen" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Organizers",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "OrganizerContactNumber", "OrganizerEmail", "OrganizerName", "OrganizerPassword", "OrganizerPosition", "UpdatedBy", "VendorID" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "99661234", "ChristopherRay321@gmail.com", "Christopher Ray", "ChristopherRay123@", "Overall Manager", null, 1 },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "98343264", "Chuareijet2003@gmail.com", "Chua Rei Jet", "Chuareijet2003", "Overall Supervisor", null, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Sponsors",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "EventID", "OrganizerID", "SponsorContactInfo", "SponsorName", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, "93939231", "Sukh Ma", null },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 2, "94942314", "Bendover", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -390,6 +440,16 @@ namespace TheCJTechShow.Server.Migrations
                 name: "IX_DeviceCodes_Expiration",
                 table: "DeviceCodes",
                 column: "Expiration");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Events_OrganizerID",
+                table: "Events",
+                column: "OrganizerID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Events_VendorID",
+                table: "Events",
+                column: "VendorID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Keys_Use",

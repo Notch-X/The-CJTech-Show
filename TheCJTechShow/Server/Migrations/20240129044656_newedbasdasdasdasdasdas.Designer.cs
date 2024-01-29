@@ -12,8 +12,8 @@ using TheCJTechShow.Server.Data;
 namespace TheCJTechShow.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240129044017_newedbasdasdasd")]
-    partial class newedbasdasdasd
+    [Migration("20240129044656_newedbasdasdasdasdasdas")]
+    partial class newedbasdasdasdasdasdas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -473,6 +473,32 @@ namespace TheCJTechShow.Server.Migrations
                     b.HasIndex("VendorID");
 
                     b.ToTable("Organizers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OrganizerContactNumber = "99661234",
+                            OrganizerEmail = "ChristopherRay321@gmail.com",
+                            OrganizerName = "Christopher Ray",
+                            OrganizerPassword = "ChristopherRay123@",
+                            OrganizerPosition = "Overall Manager",
+                            VendorID = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            OrganizerContactNumber = "98343264",
+                            OrganizerEmail = "Chuareijet2003@gmail.com",
+                            OrganizerName = "Chua Rei Jet",
+                            OrganizerPassword = "Chuareijet2003",
+                            OrganizerPosition = "Overall Supervisor",
+                            VendorID = 2
+                        });
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Sponsor", b =>
@@ -514,6 +540,28 @@ namespace TheCJTechShow.Server.Migrations
                     b.HasIndex("OrganizerID");
 
                     b.ToTable("Sponsors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventID = 1,
+                            OrganizerID = 1,
+                            SponsorContactInfo = "93939231",
+                            SponsorName = "Sukh Ma"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EventID = 2,
+                            OrganizerID = 2,
+                            SponsorContactInfo = "94942314",
+                            SponsorName = "Bendover"
+                        });
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Vendor", b =>
@@ -557,15 +605,41 @@ namespace TheCJTechShow.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vendors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BoothNumber = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Products = "Graphics Cards, Headsets,Microphones,keyboards",
+                            SocialMedia = "BNM_Tech",
+                            VendorContactDetails = "96961234",
+                            VendorDescription = "BNM Technology Pte Ltd, Leading IT product sales",
+                            VendorName = "Derrick Choo"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BoothNumber = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Products = "CHATGPT",
+                            SocialMedia = "CHATGPT_AIKING",
+                            VendorContactDetails = "94532356",
+                            VendorDescription = "AIChatGPT Technology Pte Ltd, Leading CHATGPT seller",
+                            VendorName = "Darius Yeo"
+                        });
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Visitor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("VisitorID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VisitorID"));
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -575,6 +649,9 @@ namespace TheCJTechShow.Server.Migrations
 
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -588,15 +665,36 @@ namespace TheCJTechShow.Server.Migrations
                     b.Property<string>("VisitorEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VisitorID")
-                        .HasColumnType("int");
-
                     b.Property<string>("VisitorName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("VisitorID");
 
                     b.ToTable("Visitors");
+
+                    b.HasData(
+                        new
+                        {
+                            VisitorID = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            VisitorCompany = "Temasek Polytechnic",
+                            VisitorContactNumber = "98234123",
+                            VisitorEmail = "MrKumbar123@gmail.com",
+                            VisitorName = "Mr Kumbar"
+                        },
+                        new
+                        {
+                            VisitorID = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 0,
+                            VisitorCompany = "Tech Dynamic Pte Ltd",
+                            VisitorContactNumber = "88843212",
+                            VisitorEmail = "FooLingChen123@gmail.com",
+                            VisitorName = "Mr Foo Ling Chen"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
