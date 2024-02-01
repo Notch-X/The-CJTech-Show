@@ -12,8 +12,8 @@ using TheCJTechShow.Server.Data;
 namespace TheCJTechShow.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240129071439_NEWDB")]
-    partial class NEWDB
+    [Migration("20240201024010_newdb")]
+    partial class newdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -382,45 +382,34 @@ namespace TheCJTechShow.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("EventContactInformation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventDescription")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventDuration")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventLocation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EventRegistration")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventTicketPrice")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrganizerID")
                         .HasColumnType("int");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("OrganizerID");
 
                     b.ToTable("Events");
 
@@ -428,8 +417,6 @@ namespace TheCJTechShow.Server.Migrations
                         new
                         {
                             ID = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventContactInformation = "69691234",
                             EventDescription = "IT Tech Show",
                             EventDuration = "10am-8pm",
@@ -441,8 +428,6 @@ namespace TheCJTechShow.Server.Migrations
                         new
                         {
                             ID = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventContactInformation = "69691234",
                             EventDescription = "IT Tech Show",
                             EventDuration = "10am-8pm",
@@ -461,15 +446,6 @@ namespace TheCJTechShow.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("OrganizerContactNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -485,15 +461,7 @@ namespace TheCJTechShow.Server.Migrations
                     b.Property<string>("OrganizerPosition")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VendorID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("VendorID");
 
                     b.ToTable("Organizers");
 
@@ -501,26 +469,20 @@ namespace TheCJTechShow.Server.Migrations
                         new
                         {
                             ID = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrganizerContactNumber = "99661234",
                             OrganizerEmail = "ChristopherRay321@gmail.com",
                             OrganizerName = "Christopher Ray",
                             OrganizerPassword = "ChristopherRay123@",
-                            OrganizerPosition = "Overall Manager",
-                            VendorID = 1
+                            OrganizerPosition = "Overall Manager"
                         },
                         new
                         {
                             ID = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OrganizerContactNumber = "98343264",
                             OrganizerEmail = "Chuareijet2003@gmail.com",
                             OrganizerName = "Chua Rei Jet",
                             OrganizerPassword = "Chuareijet2003",
-                            OrganizerPosition = "Overall Supervisor",
-                            VendorID = 2
+                            OrganizerPosition = "Overall Supervisor"
                         });
                 });
 
@@ -532,25 +494,15 @@ namespace TheCJTechShow.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("EventID")
                         .HasColumnType("int");
 
                     b.Property<string>("SponsorContactInfo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SponsorName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -563,8 +515,6 @@ namespace TheCJTechShow.Server.Migrations
                         new
                         {
                             ID = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventID = 1,
                             SponsorContactInfo = "93939231",
                             SponsorName = "Sukh Ma"
@@ -572,8 +522,6 @@ namespace TheCJTechShow.Server.Migrations
                         new
                         {
                             ID = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventID = 2,
                             SponsorContactInfo = "94942314",
                             SponsorName = "Bendover"
@@ -591,22 +539,10 @@ namespace TheCJTechShow.Server.Migrations
                     b.Property<int>("BoothNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Products")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SocialMedia")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VendorContactDetails")
@@ -632,8 +568,6 @@ namespace TheCJTechShow.Server.Migrations
                         {
                             ID = 1,
                             BoothNumber = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Products = "Graphics Cards, Headsets,Microphones,keyboards",
                             SocialMedia = "BNM_Tech",
                             VendorContactDetails = "96961234",
@@ -645,8 +579,6 @@ namespace TheCJTechShow.Server.Migrations
                         {
                             ID = 2,
                             BoothNumber = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Products = "CHATGPT",
                             SocialMedia = "CHATGPT_AIKING",
                             VendorContactDetails = "94532356",
@@ -663,18 +595,6 @@ namespace TheCJTechShow.Server.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VisitorCompany")
                         .HasColumnType("nvarchar(max)");
@@ -696,8 +616,6 @@ namespace TheCJTechShow.Server.Migrations
                         new
                         {
                             ID = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             VisitorCompany = "Temasek Polytechnic",
                             VisitorContactNumber = "98234123",
                             VisitorEmail = "MrKumbar123@gmail.com",
@@ -706,8 +624,6 @@ namespace TheCJTechShow.Server.Migrations
                         new
                         {
                             ID = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             VisitorCompany = "Tech Dynamic Pte Ltd",
                             VisitorContactNumber = "88843212",
                             VisitorEmail = "FooLingChen123@gmail.com",
@@ -764,28 +680,6 @@ namespace TheCJTechShow.Server.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("TheCJTechShow.Shared.Domain.Event", b =>
-                {
-                    b.HasOne("TheCJTechShow.Shared.Domain.Organizer", "Organizers")
-                        .WithMany()
-                        .HasForeignKey("OrganizerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Organizers");
-                });
-
-            modelBuilder.Entity("TheCJTechShow.Shared.Domain.Organizer", b =>
-                {
-                    b.HasOne("TheCJTechShow.Shared.Domain.Vendor", "Vendor")
-                        .WithMany()
-                        .HasForeignKey("VendorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Sponsor", b =>

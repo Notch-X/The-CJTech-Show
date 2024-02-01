@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 
 namespace TheCJTechShow.Shared.Domain
 {
-    public class Organizer : BaseDomainModel
+    public class Organizer :BaseDomainModel
     {
         public string? OrganizerName { get; set; }
         public string? OrganizerContactNumber { get; set; }
         public string? OrganizerPosition { get; set; }
         public string? OrganizerEmail { get; set; }
         public string? OrganizerPassword { get; set; }
-
-        public int VendorID { get; set; }
-        public virtual Vendor? Vendor { get; set; }
 
     }
 }

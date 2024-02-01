@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TheCJTechShow.Shared.Domain
 {
-    public class Visitor : BaseDomainModel
+    public class Visitor:BaseDomainModel
     {
         public string? VisitorName { get; set; }
         public string? VisitorContactNumber { get; set; }

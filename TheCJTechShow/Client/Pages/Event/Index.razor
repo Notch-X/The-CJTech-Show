@@ -1,86 +1,94 @@
 ﻿@page "/events/"
 @inject HttpClient _client
-@inject IJSRuntime _js
+@inject IJSRuntime js
 @attribute [Authorize]
 @implements IDisposable
-@using TheCJTechShow.Client.Static;
-@using TheCJTechShow.Shared.Domain;
 
-<h3 class="card-title">Events</h3>
-<a href="/events/create" class="btn btn-secondary">
-    <span class="oi oi-plus"></span>
-    Create New Events
-</a>
+@*<h3 class="card-title">Events</h3>*@
+<h1 style="  font-size: 70px;
+  font-weight: 600;
+  color: dodgerblue;
+  text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;">
+	Events
+</h1>
+
 <br />
 
-@if (Events == null)
+<a href="/events/create" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Event
+</a>
+<br />
+<br />
+
+@if (Events== null)
 {
-    <div class="alert alert-info">Loading Events...</div>
+	<div class="alert alert-info">Loading Makes...</div>
 }
+
 else
 {
-    <table class="table table-responsive" id="eventsTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var eventItem in Events)
-            {
-                <tr>
-                    <td>@eventItem.EventName</td>
-                    <td>
-                        <a href="/events/view/@eventItem.ID" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/events/edit/@eventItem.ID" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(eventItem.ID, eventItem.EventName))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+	<table class="table table-responsive" id="eventsTable">
+	@*<table class="table table-responsive">*@
+		<thead>
+			<tr>
+				<th>Event ID</th>
+				<th>Event Name</th>
+				<th>Event Location</th>
+				<th>Event Description</th>
+				<th>Event TicketPrice</th>
+				<th>Event ContactInfo</th>
+				<th> Actions </th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var events in Events)
+			{
+				<tr>
+					<td>@events.ID</td>
+					<td>@events.EventName</td>
+					<td>@events.EventLocation</td>
+					<td>@events.EventDescription</td>
+					<td>@events.EventTicketPrice</td>
+					<td>@events.EventContactInformation</td>
+					<td>
+						<a href="/events/view/@events.ID" class="btn btn-primary">
+							<span class="oi oi-book"></span>
+						</a>
+						<a href="/events/edit/@events.ID" class="btn btn-warning">
+							<span class="oi oi-pencil"></span>
+						</a>
+						<button class="btn btn-danger" @onclick ="@(()=>Delete(events.ID))">
+							<span class="oi oi-delete"></span>
+							</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 }
 
-@code {
-    private List<Event> Events;
+@code{
+	private List<Event>? Events;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await RefreshEvents();
-    }
+	protected async override Task OnInitializedAsync()
+	{		
+		Events = await _client.GetFromJsonAsync<List<Event>>($"{Endpoints.EventsEndpoint}");
+	}
 
-    private async Task RefreshEvents()
-    {
-        Events = await _client.GetFromJsonAsync<List<Event>>(Endpoints.EventsEndpoint);
-    }
-
-    async Task Delete(int eventId, string eventName)
-    {
-        var confirm = await _js.InvokeAsync<bool>("confirm", $"Do you want to delete {eventName}?");
-        if (confirm)
-        {
-            await _client.DeleteAsync($"{Endpoints.EventsEndpoint}/{eventId}");
-            await RefreshEvents();
-        }
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await _js.InvokeVoidAsync("AddDataTable", "#eventsTable");
-        }
-    }
-
-    public void Dispose()
-    {
-        _js.InvokeVoidAsync("DataTablesDispose", "#eventsTable");
-    }
+	async Task Delete(int eventId)
+	{
+		var events = Events.First(q => q.ID == eventId);
+		var confirm = await js.InvokeAsync<bool>("confirm",$"Do you want to delete {events.EventName}?");
+		if (confirm)
+		{
+			await _client.DeleteAsync($"{Endpoints.EventsEndpoint}/{eventId}");
+			await OnInitializedAsync();
+		}
+	}
+	public void Dispose()
+	{
+		js.InvokeVoidAsync("DataTablesDispose", "#eventsTable");
+	}
 }
+

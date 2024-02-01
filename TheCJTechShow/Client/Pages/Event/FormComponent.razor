@@ -1,13 +1,4 @@
-﻿
-@using TheCJTechShow.Client.Static;
-@using TheCJTechShow.Shared.Domain;
-
-@inject HttpClient _client
-@inject IJSRuntime _js
-@attribute [Authorize]
-@implements IDisposable
-
-<h3>Events</h3>
+﻿<h3>Events</h3>
 
 <EditForm Model="@eventModel" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
@@ -21,6 +12,7 @@
                 <ValidationMessage For="@(() => eventModel.EventName)" />
             </div>
         </div>
+        <FormComponent />
 
         <div class="form-group">
             <label>EventLocation: </label>
@@ -37,6 +29,27 @@
                 <ValidationMessage For="@(() => eventModel.EventDuration)" />
             </div>
         </div>
+        <div class="form-group">
+            <label>EventDescription: </label>
+            <div>
+                <InputText @bind-Value="@eventModel.EventDescription" class="form-control" />
+                <ValidationMessage For="@(() => eventModel.EventDuration)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>EventTicketPrice: </label>
+            <div>
+                <InputText @bind-Value="@eventModel.EventTicketPrice" class="form-control" />
+                <ValidationMessage For="@(() => eventModel.EventDuration)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>EventContactInfo: </label>
+            <div>
+                <InputText @bind-Value="@eventModel.EventContactInformation" class="form-control" />
+                <ValidationMessage For="@(() => eventModel.EventDuration)" />
+            </div>
+        </div>
     </fieldset>
 
     @if (!Disabled)
@@ -45,17 +58,12 @@
             @ButtonText
         </button>
     }
-    <BackToList Target="Events" />
 </EditForm>
 
 @code {
     [Parameter] public bool Disabled { get; set; } = false;
-    [Parameter] public Event? eventModel { get; set; }
+    [Parameter] public Event eventModel { get; set; } = new Event();
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback<EditContext> OnValidSubmit { get; set; }
 
-    public void Dispose()
-    {
-        // Implement IDisposable.Dispose if necessary
-    }
 }

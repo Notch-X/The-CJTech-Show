@@ -1,41 +1,47 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using TheCJTechShow.Server.Data;
+using TheCJTechShow.Server.IRepository;
+using TheCJTechShow.Server.Models;
+using TheCJTechShow.Server.Repository;
+using TheCJTechShow.Shared.Domain;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using TheCJTechShow.Server.Data;
-using TheCJTechShow.Server.IRepository;
-using TheCJTechShow.Server.Models;
-using TheCJTechShow.Shared.Domain;
 
 namespace TheCJTechShow.Server.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private IGenericRepository<Event> _events;
+        private IGenericRepository<Vendor> _vendors;
+        private IGenericRepository<Organizer> _organizers;
+        private IGenericRepository<Visitor> _visitors;
+        private IGenericRepository<Sponsor> _sponsors;
+
+        private UserManager<ApplicationUser> _userManager;
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
-        private IGenericRepository<Event> _events;
-        public IGenericRepository<Event> Events => _events ??= new GenericRepository<Event>(_context);
 
-        private IGenericRepository<Visitor> _visitors;
-        public IGenericRepository<Visitor> Visitors => _visitors ??= new GenericRepository<Visitor>(_context);
-
-        private IGenericRepository<Organizer> _organizers;
-        public IGenericRepository<Organizer> Organizers => _organizers ??= new GenericRepository<Organizer>(_context);
-
-        private IGenericRepository<Vendor> _vendors;
-        public IGenericRepository<Vendor> Vendors => _vendors ??= new GenericRepository<Vendor>(_context);
-
-        private IGenericRepository<Sponsor> _sponsors;
-        public IGenericRepository<Sponsor> Sponsors => _sponsors ??= new GenericRepository<Sponsor>(_context);
+        public IGenericRepository<Event> Events
+            => _events ??= new GenericRepository<Event>(_context);
+        public IGenericRepository<Visitor> Visitors
+            => _visitors ??= new GenericRepository<Visitor>(_context);
+        public IGenericRepository<Vendor> Vendors
+            => _vendors ??= new GenericRepository<Vendor>(_context);
+        public IGenericRepository<Organizer> Organizers
+            => _organizers ??= new GenericRepository<Organizer>(_context);
+        public IGenericRepository<Sponsor> Sponsors
+            => _sponsors ??= new GenericRepository<Sponsor>(_context);
 
         public void Dispose()
         {
@@ -45,24 +51,23 @@ namespace TheCJTechShow.Server.Repository
 
         public async Task Save(HttpContext httpContext)
         {
-
+            //To be implemented
             string user = "System";
 
             var entries = _context.ChangeTracker.Entries()
-                .Where(q => q.State == EntityState.Modified || q.State == EntityState.Added);
+                .Where(q => q.State == EntityState.Modified ||
+                    q.State == EntityState.Added);
 
-            foreach (var entry in entries)
-            {
-                var entity = (BaseDomainModel)entry.Entity;
-                entity.DateUpdated = DateTime.Now;
-                entity.UpdatedBy = user;
-
-                if (entry.State == EntityState.Added)
-                {
-                    entity.DateCreated = DateTime.Now;
-                    entity.CreatedBy = user;
-                }
-            }
+            //foreach (var entry in entries)
+          //  {
+                //((BaseDomainModel)entry.Entity).DateUpdated = DateTime.Now;
+                //((BaseDomainModel)entry.Entity).UpdatedBy = user;
+               // if (entry.State == EntityState.Added)
+               // {
+                 //   ((BaseDomainModel)entry.Entity).DateCreated = DateTime.Now;
+                    //((BaseDomainModel)entry.Entity).CreatedBy = user;
+               // }
+          //  }
 
             await _context.SaveChangesAsync();
         }

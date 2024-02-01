@@ -1,30 +1,41 @@
 ﻿@page "/events/create"
-@using TheCJTechShow.Client.Static
-@using TheCJTechShow.Shared.Domain
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Create New event</h3>
+<h3 class="card-title">Create New Event</h3>
 <hr />
 <br />
 
-<FormComponent ButtonText="Create event" event="newEvent" OnValidSubmit="@CreateEvent" />
+<FormComponent ButtonText="Create Event" eventModel="newEvent" OnValidSubmit="@CreateEvent" />
 
 @code {
     Event newEvent = new Event();
-
-    private IList<Organizer>? Organizers;
-    private IList<Vendor>? Vendors;
+    private IList<Organizer> Organizer;  // Remove the nullable (?)
 
     protected override async Task OnInitializedAsync()
     {
-        Organizers = await _client.GetFromJsonAsync<List<Organizer>>($"{Endpoints.OrganizersEndpoint}");
-        Vendors = await _client.GetFromJsonAsync<List<Vendor>>($"{Endpoints.VendorsEndpoint}");
+        try
+        {
+            Organizer = await _client.GetFromJsonAsync<List<Organizer>>($"{Endpoints.OrganizersEndpoint}");
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception, log, or display an error message as needed.
+            Console.WriteLine($"Error fetching organizers: {ex.Message}");
+        }
     }
 
     private async Task CreateEvent()
     {
-        await _client.PostAsJsonAsync(Endpoints.EventsEndpoint, newEvent);
-        _navManager.NavigateTo("/events/");
+        try
+        {
+            await _client.PostAsJsonAsync(Endpoints.EventsEndpoint, newEvent);
+            _navManager.NavigateTo("/events/");
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception, log, or display an error message as needed.
+            Console.WriteLine($"Error creating event: {ex.Message}");
+        }
     }
 }

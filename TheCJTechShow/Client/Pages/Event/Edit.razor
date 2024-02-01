@@ -1,12 +1,9 @@
 ﻿@page "/events/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
-@using TheCJTechShow.Client.Static;
-@using TheCJTechShow.Shared.Domain;
 <h3>Edit Event</h3>
 
-<FormComponent ButtonText="Update" OnValidSubmit="EditEvent" eventModel="eventModel"></FormComponent>
-
+<FormComponent ButtonText="Update" OnValidSubmit="EditEvent" eventModel="eventModel" />
 @code {
     [Parameter] public int id { get; set; }
     Event? eventModel = new Event();

@@ -14,8 +14,8 @@ namespace TheCJTechShow.Server.IRepository
         Task Save(HttpContext httpContext);
         IGenericRepository<Event> Events { get; }
         IGenericRepository<Visitor> Visitors { get; }
-        IGenericRepository<Organizer> Organizers { get; }
         IGenericRepository<Vendor> Vendors { get; }
         IGenericRepository<Sponsor> Sponsors { get; }
+        IGenericRepository<Organizer> Organizers { get; }
     }
 }

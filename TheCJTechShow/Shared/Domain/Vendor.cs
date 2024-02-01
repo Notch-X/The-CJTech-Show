@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace TheCJTechShow.Shared.Domain
 {
 
-    public class Vendor :BaseDomainModel
-    {
+    public class Vendor: BaseDomainModel
+    { 
         public string? VendorName { get; set; }
         public string? VendorContactDetails { get; set; }
         public int BoothNumber { get; set; }
