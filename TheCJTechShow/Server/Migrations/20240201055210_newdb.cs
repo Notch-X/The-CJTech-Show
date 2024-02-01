@@ -74,25 +74,6 @@ namespace TheCJTechShow.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Events",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EventName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventDuration = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventTicketPrice = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventContactInformation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrganizerID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Events", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Keys",
                 columns: table => new
                 {
@@ -270,22 +251,26 @@ namespace TheCJTechShow.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sponsors",
+                name: "Events",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SponsorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SponsorContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventID = table.Column<int>(type: "int", nullable: false)
+                    EventName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventDuration = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventTicketPrice = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EventContactInformation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrganizerID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sponsors", x => x.ID);
+                    table.PrimaryKey("PK_Events", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Sponsors_Events_EventID",
-                        column: x => x.EventID,
-                        principalTable: "Events",
+                        name: "FK_Events_Organizers_OrganizerID",
+                        column: x => x.OrganizerID,
+                        principalTable: "Organizers",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -315,13 +300,25 @@ namespace TheCJTechShow.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Events",
-                columns: new[] { "ID", "EventContactInformation", "EventDescription", "EventDuration", "EventLocation", "EventName", "EventTicketPrice", "OrganizerID" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "Sponsors",
+                columns: table => new
                 {
-                    { 1, "69691234", "IT Tech Show", "10am-8pm", "Suntec City, Postal code:039053", "IT Tech Show Suntec City", "Visitor:$100 ,Vendor:$80", 1 },
-                    { 2, "69691234", "IT Tech Show", "10am-8pm", "Expo, Postal code:392012", "IT Tech Show Expo", "Visitor:$100 ,Vendor:$80", 2 }
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SponsorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SponsorContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EventID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sponsors", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Sponsors_Events_EventID",
+                        column: x => x.EventID,
+                        principalTable: "Events",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -343,12 +340,12 @@ namespace TheCJTechShow.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Sponsors",
-                columns: new[] { "ID", "EventID", "SponsorContactInfo", "SponsorName" },
+                table: "Events",
+                columns: new[] { "ID", "EventContactInformation", "EventDescription", "EventDuration", "EventLocation", "EventName", "EventTicketPrice", "OrganizerID" },
                 values: new object[,]
                 {
-                    { 1, 1, "93939231", "Sukh Ma" },
-                    { 2, 2, "94942314", "Bendover" }
+                    { 1, "69691234", "IT Tech Show", "10am-8pm", "Suntec City, Postal code:039053", "IT Tech Show Suntec City", "Visitor:$100 ,Vendor:$80", 1 },
+                    { 2, "69691234", "IT Tech Show", "10am-8pm", "Expo, Postal code:392012", "IT Tech Show Expo", "Visitor:$100 ,Vendor:$80", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -358,6 +355,15 @@ namespace TheCJTechShow.Server.Migrations
                 {
                     { 1, 1, "Graphics Cards, Headsets,Microphones,keyboards", "BNM_Tech", "96961234", "BNM Technology Pte Ltd, Leading IT product sales", "Derrick Choo", 1 },
                     { 2, 2, "CHATGPT", "CHATGPT_AIKING", "94532356", "AIChatGPT Technology Pte Ltd, Leading CHATGPT seller", "Darius Yeo", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Sponsors",
+                columns: new[] { "ID", "EventID", "SponsorContactInfo", "SponsorName" },
+                values: new object[,]
+                {
+                    { 1, 1, "93939231", "Sukh Ma" },
+                    { 2, 2, "94942314", "Bendover" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -409,6 +415,11 @@ namespace TheCJTechShow.Server.Migrations
                 name: "IX_DeviceCodes_Expiration",
                 table: "DeviceCodes",
                 column: "Expiration");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Events_OrganizerID",
+                table: "Events",
+                column: "OrganizerID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Keys_Use",
@@ -471,9 +482,6 @@ namespace TheCJTechShow.Server.Migrations
                 name: "Keys");
 
             migrationBuilder.DropTable(
-                name: "Organizers");
-
-            migrationBuilder.DropTable(
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
@@ -493,6 +501,9 @@ namespace TheCJTechShow.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Visitors");
+
+            migrationBuilder.DropTable(
+                name: "Organizers");
         }
     }
 }

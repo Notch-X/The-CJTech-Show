@@ -1,4 +1,5 @@
-﻿<h3>Events</h3>
+﻿@inject HttpClient _client
+<h3>Events</h3>
 
 <EditForm Model="@eventModel" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
@@ -6,13 +7,28 @@
 
     <fieldset disabled="@Disabled">
         <div class="form-group">
+            <div>
+                <InputSelect @bind-Value="@eventModel.OrganizerID" class="form-control">
+                    <option value="">--Select Organizer--</option>
+                    @if (Organizers != null)
+                    {
+                        foreach (var organizers in Organizers)
+                        {
+                            <option value="@organizers.ID">@organizers.OrganizerName</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(()=>eventModel.OrganizerID)" />
+            </div>
+        </div>
+
+        <div class="form-group">
             <label>EventName: </label>
             <div>
                 <InputText @bind-Value="@eventModel.EventName" class="form-control" />
                 <ValidationMessage For="@(() => eventModel.EventName)" />
             </div>
         </div>
-        <FormComponent />
 
         <div class="form-group">
             <label>EventLocation: </label>
@@ -33,21 +49,21 @@
             <label>EventDescription: </label>
             <div>
                 <InputText @bind-Value="@eventModel.EventDescription" class="form-control" />
-                <ValidationMessage For="@(() => eventModel.EventDuration)" />
+                <ValidationMessage For="@(() => eventModel.EventDescription)" />
             </div>
         </div>
         <div class="form-group">
             <label>EventTicketPrice: </label>
             <div>
                 <InputText @bind-Value="@eventModel.EventTicketPrice" class="form-control" />
-                <ValidationMessage For="@(() => eventModel.EventDuration)" />
+                <ValidationMessage For="@(() => eventModel.EventTicketPrice)" />
             </div>
         </div>
         <div class="form-group">
             <label>EventContactInfo: </label>
             <div>
                 <InputText @bind-Value="@eventModel.EventContactInformation" class="form-control" />
-                <ValidationMessage For="@(() => eventModel.EventDuration)" />
+                <ValidationMessage For="@(() => eventModel.EventContactInformation)" />
             </div>
         </div>
     </fieldset>
@@ -65,5 +81,10 @@
     [Parameter] public Event eventModel { get; set; } = new Event();
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback<EditContext> OnValidSubmit { get; set; }
+    private IList<Organizer>? Organizers;
 
+    protected async override Task OnInitializedAsync()
+    {
+        Organizers = await _client.GetFromJsonAsync<List<Organizer>>($"{Endpoints.OrganizersEndpoint}");
+    }
 }

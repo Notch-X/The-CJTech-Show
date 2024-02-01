@@ -10,7 +10,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        eventModel = await _client.GetFromJsonAsync<Event>($"{Endpoints.EventsEndpoint}/{id}"); 
+        eventModel = await _client.GetFromJsonAsync<Event>($"{Endpoints.EventsEndpoint}/{id}");
     }
 
     async Task EditEvent()

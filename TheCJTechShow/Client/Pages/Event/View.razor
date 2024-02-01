@@ -5,31 +5,14 @@
 @using TheCJTechShow.Client.Static;
 <h3>View</h3>
 
-@if (newEvent != null)
-{
-<FormComponent event="event" Disabled="true" />
-        }
-else
-{
-<p>Loading...</p>
-        }
+<FormComponent eventModel="eventModel" Disabled="true" />
 
 @code {
     [Parameter] public int id { get; set; }
-    Event? newEvent = new Event();
-
-    protected override async Task OnInitializedAsync()
+    Event? eventModel = new Event();
+    
+    protected async override Task OnParametersSetAsync()
     {
-        await LoadEventData();
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await LoadEventData();
-    }
-
-    private async Task LoadEventData()
-    {
-    newEvent = await _client.GetFromJsonAsync<Event>($"{Endpoints.EventsEndpoint}/{id}");
+        eventModel = await _client.GetFromJsonAsync<Event>($"{Endpoints.EventsEndpoint}/{id}");
     }
 }

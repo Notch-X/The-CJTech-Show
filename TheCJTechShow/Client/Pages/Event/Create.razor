@@ -1,41 +1,27 @@
-﻿@page "/events/create"
+﻿@page "/events/create/"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Create New Event</h3>
+<h3 class=" card-title">Create New Events</h3>
 <hr />
 <br />
 
-<FormComponent ButtonText="Create Event" eventModel="newEvent" OnValidSubmit="@CreateEvent" />
+<FormComponent ButtonText="Create Event" eventModel="eventModel" OnValidSubmit="CreateEvent" />
+
 
 @code {
-    Event newEvent = new Event();
-    private IList<Organizer> Organizer;  // Remove the nullable (?)
+	Event eventModel = new Event();
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            Organizer = await _client.GetFromJsonAsync<List<Organizer>>($"{Endpoints.OrganizersEndpoint}");
-        }
-        catch (Exception ex)
-        {
-            // Handle the exception, log, or display an error message as needed.
-            Console.WriteLine($"Error fetching organizers: {ex.Message}");
-        }
-    }
+	private IList<Organizer>? Organizers;
 
-    private async Task CreateEvent()
-    {
-        try
-        {
-            await _client.PostAsJsonAsync(Endpoints.EventsEndpoint, newEvent);
-            _navManager.NavigateTo("/events/");
-        }
-        catch (Exception ex)
-        {
-            // Handle the exception, log, or display an error message as needed.
-            Console.WriteLine($"Error creating event: {ex.Message}");
-        }
-    }
+	protected async override Task OnInitializedAsync()
+	{
+			Organizers = await _client.GetFromJsonAsync<List<Organizer>>($"{Endpoints.OrganizersEndpoint}");
+	}
+
+	private async Task CreateEvent()
+	{
+		await _client.PostAsJsonAsync(Endpoints.EventsEndpoint, eventModel);
+		_navManager.NavigateTo("/events/");
+	}
 }

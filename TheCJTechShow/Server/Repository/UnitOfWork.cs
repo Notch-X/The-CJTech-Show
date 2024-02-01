@@ -18,11 +18,11 @@ namespace TheCJTechShow.Server.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        private IGenericRepository<Event> _events;
-        private IGenericRepository<Vendor> _vendors;
-        private IGenericRepository<Organizer> _organizers;
-        private IGenericRepository<Visitor> _visitors;
-        private IGenericRepository<Sponsor> _sponsors;
+        private IGenericRepository<Event>? _events;
+        private IGenericRepository<Vendor>? _vendors;
+        private IGenericRepository<Organizer>? _organizers;
+        private IGenericRepository<Visitor>? _visitors;
+        private IGenericRepository<Sponsor>? _sponsors;
 
         private UserManager<ApplicationUser> _userManager;
 

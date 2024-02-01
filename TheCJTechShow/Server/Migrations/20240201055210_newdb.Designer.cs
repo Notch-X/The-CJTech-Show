@@ -12,7 +12,7 @@ using TheCJTechShow.Server.Data;
 namespace TheCJTechShow.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240201024010_newdb")]
+    [Migration("20240201055210_newdb")]
     partial class newdb
     {
         /// <inheritdoc />
@@ -383,33 +383,29 @@ namespace TheCJTechShow.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("EventContactInformation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventDuration")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventLocation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EventTicketPrice")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrganizerID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("OrganizerID");
 
                     b.ToTable("Events");
 
@@ -680,6 +676,17 @@ namespace TheCJTechShow.Server.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TheCJTechShow.Shared.Domain.Event", b =>
+                {
+                    b.HasOne("TheCJTechShow.Shared.Domain.Organizer", "Organizers")
+                        .WithMany()
+                        .HasForeignKey("OrganizerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organizers");
                 });
 
             modelBuilder.Entity("TheCJTechShow.Shared.Domain.Sponsor", b =>
