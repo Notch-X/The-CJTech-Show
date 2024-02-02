@@ -1,0 +1,80 @@
+﻿@page "/sponsors/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+
+<h1 style="font-size: 70px; font-weight: 600; color: dodgerblue; text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;">Sponsors</h1>
+
+<br />
+
+<a href="/sponsors/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Sponsor
+</a>
+<br />
+<br />
+
+@if (Sponsors == null)
+{
+    <div class="alert alert-info">Loading Sponsors...</div>
+}
+else
+{
+    <table class="table table-responsive" id="sponsorsTable">
+        <thead>
+            <tr>
+                <th>Sponsor ID</th>
+                <th>Sponsor Name</th>
+                <th>Sponsor Contact Info</th>
+                <th> Actions </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sponsor in Sponsors)
+            {
+                <tr>
+                    <td>@sponsor.ID</td>
+                    <td>@sponsor.SponsorName</td>
+                    <td>@sponsor.SponsorContactInfo</td>
+                    <td>
+                        <a href="/sponsors/view/@sponsor.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/sponsors/edit/@sponsor.ID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(sponsor.ID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Sponsor>? Sponsors;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Sponsors = await _client.GetFromJsonAsync<List<Sponsor>>($"{Endpoints.SponsorsEndpoint}");
+    }
+
+    async Task Delete(int sponsorId)
+    {
+        var sponsor = Sponsors.First(q => q.ID == sponsorId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {sponsor.SponsorName}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.SponsorsEndpoint}/{sponsorId}");
+            await OnInitializedAsync();
+        }
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#sponsorsTable");
+    }
+}

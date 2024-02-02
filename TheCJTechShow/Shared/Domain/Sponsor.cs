@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace TheCJTechShow.Shared.Domain
 {
     public class Sponsor: BaseDomainModel
-    {
+    {   
         public string SponsorName { get; set; }
         public string SponsorContactInfo { get; set; }
 

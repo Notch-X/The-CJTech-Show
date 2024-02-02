@@ -17,18 +17,9 @@ namespace TheCJTechShow.Server.Configurations.Entities
         public void Configure(EntityTypeBuilder<Visitor> builder)
         {
             builder.HasData(
-
 new Visitor
 {
     ID = 1,
-    VisitorName = "Mr Kumbar",
-    VisitorContactNumber = "98234123",
-    VisitorEmail = "MrKumbar123@gmail.com",
-    VisitorCompany = "Temasek Polytechnic"
-},
-new Visitor
-{
-    ID = 2,
     VisitorName = "Mr Foo Ling Chen",
     VisitorContactNumber = "88843212",
     VisitorEmail = "FooLingChen123@gmail.com",

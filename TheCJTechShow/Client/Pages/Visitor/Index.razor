@@ -1,0 +1,85 @@
+﻿@page "/visitors/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+
+
+<h1 style="font-size: 70px; font-weight: 600; color: dodgerblue; text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;">Visitors</h1>
+
+<br />
+
+<a href="/visitors/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Visitor
+</a>
+<br />
+<br />
+
+@if (Visitors == null)
+{
+    <div class="alert alert-info">Loading Visitors...</div>
+}
+else
+{
+    <table class="table table-responsive" id="visitorsTable">
+        <thead>
+            <tr>
+                <th>Visitor ID</th>
+                <th>Visitor Name</th>
+                <th>Visitor Contact Number</th>
+                <th>Visitor Email</th>
+                <th>Visitor Company</th>
+                <th> Actions </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var visitor in Visitors)
+            {
+                <tr>
+                    <td>@visitor.ID</td>
+                    <td>@visitor.VisitorName</td>
+                    <td>@visitor.VisitorContactNumber</td>
+                    <td>@visitor.VisitorEmail</td>
+                    <td>@visitor.VisitorCompany</td>
+                    <td>
+                        <a href="/visitors/view/@visitor.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/visitors/edit/@visitor.ID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(visitor.ID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Visitor>? Visitors;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Visitors = await _client.GetFromJsonAsync<List<Visitor>>($"{Endpoints.VisitorsEndpoint}");
+    }
+
+    async Task Delete(int visitorId)
+    {
+        var visitor = Visitors.First(q => q.ID == visitorId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {visitor.VisitorName}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.VisitorsEndpoint}/{visitorId}");
+            await OnInitializedAsync();
+        }
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#visitorsTable");
+    }
+}

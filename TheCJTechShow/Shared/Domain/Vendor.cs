@@ -12,14 +12,10 @@ namespace TheCJTechShow.Shared.Domain
     { 
         public string? VendorName { get; set; }
         public string? VendorContactDetails { get; set; }
-        public int BoothNumber { get; set; }
+        public string? BoothNumber { get; set; }
         public string? VendorDescription { get; set; }
         public string? Products { get; set; }
         public string? SocialMedia { get; set; }
-
-        public int VisitorID { get; set; }
-
-        public virtual Visitor? Visitor { get; set; }
 
 
     }

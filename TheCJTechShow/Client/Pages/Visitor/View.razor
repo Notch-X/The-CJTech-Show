@@ -1,0 +1,18 @@
+﻿@page "/visitors/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@using TheCJTechShow.Shared.Domain
+@using TheCJTechShow.Client.Static;
+<h3>View Visitors</h3>
+
+<FormComponent visitorModel="visitorModel" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Visitor? visitorModel = new Visitor();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        visitorModel = await _client.GetFromJsonAsync<Visitor>($"{Endpoints.VisitorsEndpoint}/{id}");
+    }
+}

@@ -1,0 +1,22 @@
+﻿@page "/Sponsors/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Edit Sponsor</h3>
+
+<FormComponent ButtonText="Update" OnValidSubmit="Editsponsor" sponsorModel="sponsorModel" />
+@code {
+    [Parameter] public int id { get; set; }
+    Sponsor? sponsorModel = new Sponsor();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        sponsorModel = await _client.GetFromJsonAsync<Sponsor>($"{Endpoints.SponsorsEndpoint}/{id}");
+    }
+
+    async Task Editsponsor()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.SponsorsEndpoint}/{id}", sponsorModel);
+        _navManager.NavigateTo("/Sponsors/");
+    }
+}

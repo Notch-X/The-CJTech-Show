@@ -1,4 +1,4 @@
-﻿@page "/Sponsor/"
+﻿@page "/SponsorPage/"
 @inject HttpClient _client
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
@@ -11,7 +11,7 @@
     }
 
     .sponsors-title {
-        font-family: 'Your-Desired-Font', sans-serif; /* Specify your desired font */
+        font-family: 'Your-Desired-Font', sans-serif;
     }
 
     .sponsor-container {
@@ -21,16 +21,16 @@
     }
 
     .sponsor-item {
-        flex: 0 0 48%; /* Adjust the width as needed, leaving space for margins */
+        flex: 0 0 48%;
         margin-bottom: 20px;
-        border: 1px solid #ddd; /* Add a border to each sponsor item */
-        padding: 10px; /* Add padding for better spacing */
-        box-sizing: border-box; /* Include padding and border in the total width */
+        border: 1px solid #ddd;
+        padding: 10px;
+        box-sizing: border-box;
     }
 
         .sponsor-item img {
-            width: 100%; /* Make the image fill the container */
-            height: auto; /* Maintain aspect ratio */
+            width: 100%;
+            height: auto;
         }
 </style>
 

@@ -22,38 +22,37 @@ namespace TheCJTechShow.Server.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Visitors
+      
         [HttpGet]
-        public async Task<IActionResult> GetVisitors()
+        public async Task<IActionResult> GetVendors()
         {
-            var Visitors = await _unitOfWork.Visitors.GetAll();
-            return Ok(Visitors);
+            var Vendors = await _unitOfWork.Vendors.GetAll();
+            return Ok(Vendors);
         }
 
-        // GET: api/Visitors/5
+       
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetVisitor(int id)
+        public async Task<IActionResult> GetVendor(int id)
         {
-            var @Visitor = await _unitOfWork.Visitors.Get(q => q.ID == id);
+            var @Vendor = await _unitOfWork.Vendors.Get(q => q.ID == id);
 
-            if (@Visitor == null)
+            if (@Vendor == null)
             {
                 return NotFound();
             }
 
-            return Ok(@Visitor);
+            return Ok(@Vendor);
         }
 
-        // PUT: api/Visitors/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVisitor(int id, Visitor @Visitor)
+        public async Task<IActionResult> PutVendor(int id, Vendor @Vendor)
         {
-            if (id != @Visitor.ID)
+            if (id != @Vendor.ID)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Visitors.Update(@Visitor);
+            _unitOfWork.Vendors.Update(@Vendor);
 
             try
             {
@@ -61,7 +60,7 @@ namespace TheCJTechShow.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await VisitorExists(id))
+                if (!await VendorExists(id))
                 {
                     return NotFound();
                 }
@@ -76,34 +75,34 @@ namespace TheCJTechShow.Server.Controllers
 
         // POST: api/Visitors
         [HttpPost]
-        public async Task<ActionResult<Visitor>> PostVisitor(Visitor @Visitor)
+        public async Task<ActionResult<Vendor>> PostVendor(Vendor @Vendor)
         {
-            await _unitOfWork.Visitors.Insert(@Visitor);
+            await _unitOfWork.Vendors.Insert(@Vendor);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetVisitor", new { id = @Visitor.ID}, @Visitor);
+            return CreatedAtAction("GetVisitor", new { id = @Vendor.ID}, @Vendor);
         }
 
         // DELETE: api/Visitors/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVisitor(int id)
+        public async Task<IActionResult> DeleteVendor(int id)
         {
-            var @Visitor = await _unitOfWork.Visitors.Get(q => q.ID == id);
-            if (@Visitor == null)
+            var @Vendor = await _unitOfWork.Vendors.Get(q => q.ID == id);
+            if (@Vendor == null)
             {
                 return NotFound();
             }
 
-            await _unitOfWork.Visitors.Delete(id);
+            await _unitOfWork.Vendors.Delete(id);
             await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
-        private async Task<bool> VisitorExists(int id)
+        private async Task<bool> VendorExists(int id)
         {
-            var @Visitor = await _unitOfWork.Visitors.Get(q => q.ID == id);
-            return @Visitor != null;
+            var @Vendor = await _unitOfWork.Vendors.Get(q => q.ID == id);
+            return @Vendor != null;
         }
     }
 }

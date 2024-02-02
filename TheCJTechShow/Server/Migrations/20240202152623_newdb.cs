@@ -129,6 +129,24 @@ namespace TheCJTechShow.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Vendors",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VendorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VendorContactDetails = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BoothNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VendorDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Products = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SocialMedia = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vendors", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Visitors",
                 columns: table => new
                 {
@@ -276,31 +294,6 @@ namespace TheCJTechShow.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vendors",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    VendorName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VendorContactDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BoothNumber = table.Column<int>(type: "int", nullable: false),
-                    VendorDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Products = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SocialMedia = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VisitorID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vendors", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Vendors_Visitors_VisitorID",
-                        column: x => x.VisitorID,
-                        principalTable: "Visitors",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Sponsors",
                 columns: table => new
                 {
@@ -331,13 +324,14 @@ namespace TheCJTechShow.Server.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Vendors",
+                columns: new[] { "ID", "BoothNumber", "Products", "SocialMedia", "VendorContactDetails", "VendorDescription", "VendorName" },
+                values: new object[] { 1, "1", "CHATGPT", "CHATGPT_AIKING", "94532356", "AIChatGPT Technology Pte Ltd, Leading CHATGPT seller", "Darius Yeo" });
+
+            migrationBuilder.InsertData(
                 table: "Visitors",
                 columns: new[] { "ID", "VisitorCompany", "VisitorContactNumber", "VisitorEmail", "VisitorName" },
-                values: new object[,]
-                {
-                    { 1, "Temasek Polytechnic", "98234123", "MrKumbar123@gmail.com", "Mr Kumbar" },
-                    { 2, "Tech Dynamic Pte Ltd", "88843212", "FooLingChen123@gmail.com", "Mr Foo Ling Chen" }
-                });
+                values: new object[] { 1, "Tech Dynamic Pte Ltd", "88843212", "FooLingChen123@gmail.com", "Mr Foo Ling Chen" });
 
             migrationBuilder.InsertData(
                 table: "Events",
@@ -346,15 +340,6 @@ namespace TheCJTechShow.Server.Migrations
                 {
                     { 1, "69691234", "IT Tech Show", "10am-8pm", "Suntec City, Postal code:039053", "IT Tech Show Suntec City", "Visitor:$100 ,Vendor:$80", 1 },
                     { 2, "69691234", "IT Tech Show", "10am-8pm", "Expo, Postal code:392012", "IT Tech Show Expo", "Visitor:$100 ,Vendor:$80", 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Vendors",
-                columns: new[] { "ID", "BoothNumber", "Products", "SocialMedia", "VendorContactDetails", "VendorDescription", "VendorName", "VisitorID" },
-                values: new object[,]
-                {
-                    { 1, 1, "Graphics Cards, Headsets,Microphones,keyboards", "BNM_Tech", "96961234", "BNM Technology Pte Ltd, Leading IT product sales", "Derrick Choo", 1 },
-                    { 2, 2, "CHATGPT", "CHATGPT_AIKING", "94532356", "AIChatGPT Technology Pte Ltd, Leading CHATGPT seller", "Darius Yeo", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -450,11 +435,6 @@ namespace TheCJTechShow.Server.Migrations
                 name: "IX_Sponsors_EventID",
                 table: "Sponsors",
                 column: "EventID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vendors_VisitorID",
-                table: "Vendors",
-                column: "VisitorID");
         }
 
         /// <inheritdoc />
@@ -491,6 +471,9 @@ namespace TheCJTechShow.Server.Migrations
                 name: "Vendors");
 
             migrationBuilder.DropTable(
+                name: "Visitors");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -498,9 +481,6 @@ namespace TheCJTechShow.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "Events");
-
-            migrationBuilder.DropTable(
-                name: "Visitors");
 
             migrationBuilder.DropTable(
                 name: "Organizers");

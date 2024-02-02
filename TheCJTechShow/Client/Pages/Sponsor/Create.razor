@@ -1,0 +1,27 @@
+﻿@page "/sponsors/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class=" card-title">Create New Sponsors</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Sponsor" sponsorModel="sponsorModel" OnValidSubmit="CreateSponsor" />
+
+
+@code {
+	Sponsor sponsorModel = new Sponsor();
+
+	private IList<Event>? Events;
+
+	protected async override Task OnInitializedAsync()
+	{
+		Events = await _client.GetFromJsonAsync<List<Event>>($"{Endpoints.EventsEndpoint}");
+	}
+
+	private async Task CreateSponsor()
+	{
+		await _client.PostAsJsonAsync(Endpoints.SponsorsEndpoint, sponsorModel);
+		_navManager.NavigateTo("/sponsors/");
+	}
+}

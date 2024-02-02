@@ -1,5 +1,21 @@
-﻿<h3>FormComponent</h3>
+﻿@page "/vendors/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+<h3>Edit Vendors</h3>
 
+<FormComponent ButtonText="Update" OnValidSubmit="EditVendor" vendorModel="vendorModel" />
 @code {
+    [Parameter] public int id { get; set; }
+    Vendor? vendorModel = new Vendor();
 
+    protected override async Task OnParametersSetAsync()
+    {
+        vendorModel = await _client.GetFromJsonAsync<Vendor>($"{Endpoints.VendorsEndpoint}/{id}");
+    }
+
+    async Task EditVendor()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.VendorsEndpoint}/{id}", vendorModel);
+        _navManager.NavigateTo("/vendors/");
+    }
 }

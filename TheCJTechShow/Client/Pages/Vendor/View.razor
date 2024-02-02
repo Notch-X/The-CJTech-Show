@@ -1,5 +1,18 @@
-﻿<h3>FormComponent</h3>
+﻿@page "/vendors/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@using TheCJTechShow.Shared.Domain
+@using TheCJTechShow.Client.Static;
+<h3>View Vendor</h3>
+
+<FormComponent vendorModel="vendorModel" Disabled="true" />
 
 @code {
+    [Parameter] public int id { get; set; }
+    Vendor? vendorModel = new Vendor();
 
+    protected async override Task OnParametersSetAsync()
+    {
+        vendorModel = await _client.GetFromJsonAsync<Vendor>($"{Endpoints.VendorsEndpoint}/{id}");
+    }
 }

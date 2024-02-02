@@ -1,5 +1,90 @@
-﻿<h3>FormComponent</h3>
+﻿@page "/vendors/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+
+<h1 style="font-size: 70px; font-weight: 600; color: dodgerblue; text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;">
+	Vendors
+</h1>
+
+<br />
+
+<a href="/vendors/create" class="btn btn-secondary">
+	<span class="oi oi-plus"></span>
+	Create New Vendor
+</a>
+<br />
+<br />
+
+@if (Vendors == null)
+{
+	<div class="alert alert-info">Loading Vendors...</div>
+}
+else
+{
+	<table class="table table-responsive" id="vendorsTable">
+		<thead>
+			<tr>
+				<th>Vendor ID</th>
+				<th>Vendor Name</th>
+				<th>Vendor Contact Details</th>
+				<th>Booth Number</th>
+				<th>Vendor Description</th>
+				<th>Products</th>
+				<th>Social Media</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var vendor in Vendors)
+			{
+				<tr>
+					<td>@vendor.ID</td>
+					<td>@vendor.VendorName</td>
+					<td>@vendor.VendorContactDetails</td>
+					<td>@vendor.BoothNumber</td>
+					<td>@vendor.VendorDescription</td>
+					<td>@vendor.Products</td>
+					<td>@vendor.SocialMedia</td>
+					<td>
+						<a href="/vendors/view/@vendor.ID" class="btn btn-primary">
+							<span class="oi oi-book"></span>
+						</a>
+						<a href="/vendors/edit/@vendor.ID" class="btn btn-warning">
+							<span class="oi oi-pencil"></span>
+						</a>
+						<button class="btn btn-danger" @onclick="@(() => Delete(vendor.ID))">
+							<span class="oi oi-delete"></span>
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
 
 @code {
+	private List<Vendor>? Vendors;
 
+	protected async override Task OnInitializedAsync()
+	{
+		Vendors = await _client.GetFromJsonAsync<List<Vendor>>($"{Endpoints.VendorsEndpoint}");
+	}
+
+	async Task Delete(int vendorId)
+	{
+		var vendor = Vendors.First(q => q.ID == vendorId);
+		var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {vendor.VendorName}?");
+		if (confirm)
+		{
+			await _client.DeleteAsync($"{Endpoints.VendorsEndpoint}/{vendorId}");
+			await OnInitializedAsync();
+		}
+	}
+
+	public void Dispose()
+	{
+		js.InvokeVoidAsync("DataTablesDispose", "#vendorsTable");
+	}
 }

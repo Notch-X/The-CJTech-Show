@@ -1,0 +1,27 @@
+﻿@page "/visitors/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class=" card-title">Create Visitors</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Visitor" visitorModel="visitorModel" OnValidSubmit="CreateVisitor" />
+
+
+@code {
+    Visitor visitorModel = new Visitor();
+
+    private IList<Visitor>? Visitors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Visitors = await _client.GetFromJsonAsync<List<Visitor>>($"{Endpoints.VisitorsEndpoint}");
+    }
+
+    private async Task CreateVisitor()
+    {
+        await _client.PostAsJsonAsync(Endpoints.VisitorsEndpoint, visitorModel);
+        _navManager.NavigateTo("/visitors/");
+    }
+        }

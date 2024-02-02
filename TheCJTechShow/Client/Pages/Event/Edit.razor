@@ -3,7 +3,9 @@
 @inject NavigationManager _navManager
 <h3>Edit Event</h3>
 
+
 <FormComponent ButtonText="Update" OnValidSubmit="EditEvent" eventModel="eventModel" />
+
 @code {
     [Parameter] public int id { get; set; }
     Event? eventModel = new Event();

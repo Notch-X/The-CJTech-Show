@@ -12,7 +12,7 @@ using TheCJTechShow.Server.Data;
 namespace TheCJTechShow.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240201055210_newdb")]
+    [Migration("20240202152623_newdb")]
     partial class newdb
     {
         /// <inheritdoc />
@@ -532,30 +532,31 @@ namespace TheCJTechShow.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("BoothNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("BoothNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Products")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SocialMedia")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VendorContactDetails")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VendorDescription")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VendorName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VisitorID")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("VisitorID");
 
                     b.ToTable("Vendors");
 
@@ -563,24 +564,12 @@ namespace TheCJTechShow.Server.Migrations
                         new
                         {
                             ID = 1,
-                            BoothNumber = 1,
-                            Products = "Graphics Cards, Headsets,Microphones,keyboards",
-                            SocialMedia = "BNM_Tech",
-                            VendorContactDetails = "96961234",
-                            VendorDescription = "BNM Technology Pte Ltd, Leading IT product sales",
-                            VendorName = "Derrick Choo",
-                            VisitorID = 1
-                        },
-                        new
-                        {
-                            ID = 2,
-                            BoothNumber = 2,
+                            BoothNumber = "1",
                             Products = "CHATGPT",
                             SocialMedia = "CHATGPT_AIKING",
                             VendorContactDetails = "94532356",
                             VendorDescription = "AIChatGPT Technology Pte Ltd, Leading CHATGPT seller",
-                            VendorName = "Darius Yeo",
-                            VisitorID = 2
+                            VendorName = "Darius Yeo"
                         });
                 });
 
@@ -612,14 +601,6 @@ namespace TheCJTechShow.Server.Migrations
                         new
                         {
                             ID = 1,
-                            VisitorCompany = "Temasek Polytechnic",
-                            VisitorContactNumber = "98234123",
-                            VisitorEmail = "MrKumbar123@gmail.com",
-                            VisitorName = "Mr Kumbar"
-                        },
-                        new
-                        {
-                            ID = 2,
                             VisitorCompany = "Tech Dynamic Pte Ltd",
                             VisitorContactNumber = "88843212",
                             VisitorEmail = "FooLingChen123@gmail.com",
@@ -698,17 +679,6 @@ namespace TheCJTechShow.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("TheCJTechShow.Shared.Domain.Vendor", b =>
-                {
-                    b.HasOne("TheCJTechShow.Shared.Domain.Visitor", "Visitor")
-                        .WithMany()
-                        .HasForeignKey("VisitorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Visitor");
                 });
 #pragma warning restore 612, 618
         }

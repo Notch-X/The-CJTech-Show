@@ -1,0 +1,18 @@
+﻿@page "/sponsors/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@using TheCJTechShow.Shared.Domain
+@using TheCJTechShow.Client.Static;
+<h3>View Sponsor</h3>
+
+<FormComponent sponsorModel="sponsorModel" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Sponsor? sponsorModel = new Sponsor();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        sponsorModel = await _client.GetFromJsonAsync<Sponsor>($"{Endpoints.SponsorsEndpoint}/{id}");
+    }
+}

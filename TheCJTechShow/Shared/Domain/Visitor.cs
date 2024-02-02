@@ -13,5 +13,6 @@ namespace TheCJTechShow.Shared.Domain
         public string? VisitorContactNumber { get; set; }
         public string? VisitorEmail { get; set; }
         public string? VisitorCompany { get; set; }
+    
     }
 }

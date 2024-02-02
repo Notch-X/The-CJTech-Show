@@ -1,0 +1,62 @@
+﻿@inject HttpClient _client
+
+<h3>Sponsor</h3>
+
+<EditForm Model="@sponsorModel" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <div>
+                <InputSelect @bind-Value="@sponsorModel.EventID" class="form-control">
+                    <option value="">--Select Event--</option>
+                    @if (Events != null)
+                    {
+                        foreach (var evnt in Events)
+                        {
+                            <option value="@evnt.ID">@evnt.EventName</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => sponsorModel.EventID)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Sponsor Name: </label>
+            <div>
+                <InputText @bind-Value="@sponsorModel.SponsorName" class="form-control" />
+                <ValidationMessage For="@(() => sponsorModel.SponsorName)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Contact Info: </label>
+            <div>
+                <InputText @bind-Value="@sponsorModel.SponsorContactInfo" class="form-control" />
+                <ValidationMessage For="@(() => sponsorModel.SponsorContactInfo)" />
+            </div>
+        </div>
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Sponsor sponsorModel { get; set; } = new Sponsor();
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback<EditContext> OnValidSubmit { get; set; }
+    private IList<Event> Events;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Events = await _client.GetFromJsonAsync<IList<Event>>($"{Endpoints.EventsEndpoint}");
+    }
+}

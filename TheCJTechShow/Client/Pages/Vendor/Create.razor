@@ -1,5 +1,27 @@
-﻿<h3>FormComponent</h3>
+﻿@page "/vendors/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title">Create New Vendors</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Vendors" vendorModel="vendorModel" OnValidSubmit="CreateVendor" />
+
 
 @code {
+    Vendor vendorModel = new Vendor();
 
+    private IList<Vendor>? Vendors;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Vendors = await _client.GetFromJsonAsync<List<Vendor>>($"{Endpoints.VendorsEndpoint}");
+    }
+
+    private async Task CreateVendor()
+    {
+        await _client.PostAsJsonAsync(Endpoints.VendorsEndpoint, vendorModel);
+        _navManager.NavigateTo("/vendors/");
+    }
 }

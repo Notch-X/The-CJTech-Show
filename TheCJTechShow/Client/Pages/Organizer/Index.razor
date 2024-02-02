@@ -1,5 +1,85 @@
-﻿<h3>Create</h3>
+﻿@page "/organizers/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+
+
+<h1 style="font-size: 70px; font-weight: 600; color: dodgerblue; text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;">Organizers</h1>
+
+<br />
+
+<a href="/organizers/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Create New Organizer
+</a>
+<br />
+<br />
+
+@if (Organizers == null)
+{
+    <div class="alert alert-info">Loading Organizers...</div>
+}
+else
+{
+    <table class="table table-responsive" id="organizersTable">
+        <thead>
+            <tr>
+                <th>Organizer ID</th>
+                <th>Organizer Name</th>
+                <th>Organizer Contact Number</th>
+                <th>Organizer Position</th>
+                <th>Organizer Email</th>
+                <th> Actions </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var organizer in Organizers)
+            {
+                <tr>
+                    <td>@organizer.ID</td>
+                    <td>@organizer.OrganizerName</td>
+                    <td>@organizer.OrganizerContactNumber</td>
+                    <td>@organizer.OrganizerPosition</td>
+                    <td>@organizer.OrganizerEmail</td>
+                    <td>
+                        <a href="/organizers/view/@organizer.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/organizers/edit/@organizer.ID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(organizer.ID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
+    private List<Organizer>? Organizers;
 
+    protected async override Task OnInitializedAsync()
+    {
+        Organizers = await _client.GetFromJsonAsync<List<Organizer>>($"{Endpoints.OrganizersEndpoint}");
+    }
+
+    async Task Delete(int organizerId)
+    {
+        var organizer = Organizers.First(q => q.ID == organizerId);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {organizer.OrganizerName}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.OrganizersEndpoint}/{organizerId}");
+            await OnInitializedAsync();
+        }
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#organizersTable");
+    }
 }
